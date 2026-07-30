@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLearn — AI & LLM Foundation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            height: 60px;
+        }
+        
+        .logo {
+            font-weight: 700;
+            color: #1a5f3c;
+            font-size: 16px;
+        }
+        
+        .course-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .main-layout {
+            display: flex;
+            height: calc(100vh - 60px);
+            gap: 0;
+        }
+        
+        /* Sidebar Left */
+        .sidebar-left {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 0;
+        }
+        
+        .sidebar-title {
+            padding: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .day-group {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .day-header {
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1a5f3c;
+            background: #f9f9f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .day-header:hover {
+            background: #f0f8f5;
+        }
+        
+        .material-item {
+            padding: 10px 15px;
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .material-item:hover {
+            background: #f5f5f5;
+            color: #1a5f3c;
+        }
+        
+        .material-item.active {
+            background: #eef8f5;
+            border-left-color: #1a5f3c;
+            color: #1a5f3c;
+            font-weight: 600;
+        }
+        
+        .material-icon {
+            font-size: 12px;
+        }
+        
+        /* Center Content */
+        .content-area {
+            flex: 1;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide-display {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .slide-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a5f3c;
+            margin-bottom: 10px;
+        }
+        
+        .slide-subtitle {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+        
+        .slide-content-box {
+            background: linear-gradient(135deg, #d4e8e1 0%, #c5dfd6 100%);
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .slide-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            text-align: left;
+        }
+        
+        .slide-footer {
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        /* Sidebar Right - Tutor */
+        .sidebar-right {
+            width: 350px;
+            background: white;
+            border-left: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .tutor-header {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f9f9f9;
+        }
+        
+        .tutor-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: #1a5f3c;
+            margin-bottom: 4px;
+        }
+        
+        .tutor-subtitle {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-behavior: smooth;
+            background: white;
+        }
+        
+        .chat-history::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-history::-webkit-scrollbar-track {
+            background: #f9f9f9;
+        }
+        
+        .chat-history::-webkit-scrollbar-thumb {
+            background: #ddd;
+            border-radius: 3px;
+        }
+        
+        .chat-history::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+        
+        .chat-message {
+            margin-bottom: 12px;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #999;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        
+        .message-content {
+            font-size: 12px;
+            line-height: 1.5;
+            padding: 10px 12px;
+            border-radius: 6px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        
+        .message-student {
+            text-align: right;
+        }
+        
+        .message-student .message-content {
+            background: #e3f2fd;
+            color: #1565c0;
+            display: inline-block;
+            max-width: 85%;
+            text-align: left;
+        }
+        
+        .message-tutor .message-content {
+            background: #f0f8f5;
+            color: #1a5f3c;
+            border-left: 3px solid #1a5f3c;
+        }
+        
+        .message-tutor.loading .message-content {
+            background: #f0f8f5;
+            color: #1a5f3c;
+            font-style: italic;
+        }
+        
+        .message-citations {
+            font-size: 10px;
+            color: #666;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        /* Typing indicator animation */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #1a5f3c;
+            animation: typingBounce 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingBounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-8px);
+                opacity: 1;
+            }
+        }
+        
+        .tutor-input-area {
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .input-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #666;
+            display: block;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 12px;
+            color: #333;
+            max-height: 60px;
+            overflow-y: auto;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .highlight-box.active {
+            background: #fff9e6;
+            border-color: #ffb300;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            max-height: 100px;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #1a5f3c;
+            box-shadow: 0 0 0 2px rgba(26, 95, 60, 0.1);
+            background: white;
+        }
+        
+        textarea::placeholder {
+            color: #aaa;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 0;
+        }
+        
+        button {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-send {
+            background: linear-gradient(135deg, #1a5f3c 0%, #0d3d24 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-send:hover {
+            background: linear-gradient(135deg, #0d3d24 0%, #051f12 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(26, 95, 60, 0.3);
+        }
+        
+        .btn-send:active {
+            transform: translateY(0);
+        }
+        
+        .btn-highlight {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-highlight:hover {
+            background: #e8e8e8;
+            border-color: #999;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo" onclick="goHome()" style="cursor: pointer;">🎓 VLearn</div>
+        <div class="course-title" id="header-title" style="display: none;">COMP2010 - Khoá 3 + 4 Phase 1</div>
+    </div>
+    
+    <!-- Home Screen -->
+    <div id="home-screen" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100vh - 60px); background: linear-gradient(135deg, #f5f5f5 0%, #e8f4f0 100%); padding: 40px;">
+        <div style="text-align: center; max-width: 600px;">
+            <h1 style="font-size: 48px; color: #1a5f3c; margin-bottom: 20px; font-weight: 700;">Welcome to VLearn</h1>
+            <p style="font-size: 18px; color: #666; margin-bottom: 40px; line-height: 1.6;">
+                Nền tảng học tập thích ứng với AI Tutor để giúp bạn hiểu bài tốt hơn
+            </p>
+            
+            <div style="background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); margin-bottom: 30px;">
+                <h2 style="font-size: 20px; color: #1a5f3c; margin-bottom: 20px;">📚 Khóa học của bạn</h2>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
+                    <strong>COMP2010 - Khoá 3 + 4 Phase 1</strong><br>
+                    AI & LLM thực chiến · 6 ngày
+                </p>
+                <p style="font-size: 13px; color: #999; margin-bottom: 25px;">
+                    1.074 học viên · Đã hoàn thành: 0/6 ngày
+                </p>
+                <button onclick="startCourse()" style="background: #1a5f3c; color: white; border: none; padding: 14px 40px; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                    🚀 Bắt đầu học
+                </button>
+            </div>
+            
+            <div style="text-align: left; background: #f0f8f5; border-left: 4px solid #1a5f3c; padding: 20px; border-radius: 6px; font-size: 13px; color: #333;">
+                <strong style="color: #1a5f3c;">💡 Cách sử dụng:</strong>
+                <ol style="margin: 10px 0 0 20px; padding: 0;">
+                    <li>Chọn bài giảng từ sidebar trái</li>
+                    <li>Bôi đen đoạn text bạn muốn hỏi</li>
+                    <li>Nhập câu hỏi → Gửi cho tutor</li>
+                    <li>Nhận phản hồi kèm citations</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Layout -->
+    <div class="main-layout" id="main-layout" style="display: none;">
+        <!-- Sidebar Left: Materials -->
+        <div class="sidebar-left">
+            <div class="sidebar-title">📚 Tài liệu học tập</div>
+            
+            <div class="day-group">
+                <div class="day-header" onclick="toggleDay(1)">Day 01: Foundation</div>
+                <div class="material-item active" onclick="selectMaterial('day1-1', this)">
+                    <span class="material-icon">📄</span>
+                    <span>AI & LLM Foundation</span>
+                </div>
+                <div class="material-item" onclick="selectMaterial('day1-2', this)">
+                    <span class="material-icon">📄</span>
+                    <span>Prompt Engineering Basics</span>
+                </div>
+            </div>
+            
+            <div class="day-group">
+                <div class="day-header" onclick="toggleDay(2)">Day 02: Problem Definition</div>
+                <div class="material-item" onclick="selectMaterial('day2-1', this)">
+                    <span class="material-icon">📄</span>
+                    <span>Xác định bài toán cho AI</span>
+                </div>
+                <div class="material-item" onclick="selectMaterial('day2-2', this)">
+                    <span class="material-icon">📄</span>
+                    <span>JTBD Framework</span>
+                </div>
+                <div class="material-item" onclick="selectMaterial('day2-3', this)">
+                    <span class="material-icon">📄</span>
+                    <span>Evidence & Impact</span>
+                </div>
+            </div>
+            
+            <div class="day-group">
+                <div class="day-header" onclick="toggleDay(3)">Day 03 - Day 06: Build & Deploy</div>
+                <div class="material-item" onclick="selectMaterial('day3-1', this)">
+                    <span class="material-icon">📄</span>
+                    <span>Writing AI Spec</span>
+                </div>
+                <div class="material-item" onclick="selectMaterial('day3-2', this)">
+                    <span class="material-icon">📄</span>
+                    <span>Testing & Evaluation</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Center: Content Display -->
+        <div class="content-area">
+            <div class="slide-display" id="slide-display">
+                <div class="slide-title">AI & LLM Foundation</div>
+                <div class="slide-subtitle">Large Language Models & Prompt Engineering</div>
+                <div class="slide-content-box">
+                    <div class="slide-content" id="slide-content">
+                        Large Language Models (LLM) là các mô hình học tập được huấn luyện trên một lượng lớn dữ liệu văn bản, cho phép chúng dự đoán token tiếp theo với xác suất cao. Các LLM hiện đại sử dụng kiến trúc Transformer với cơ chế attention giúp mô hình tập trung vào các phần quan trọng của input.
+                    </div>
+                </div>
+                <div class="slide-footer">Slide Day 01</div>
+            </div>
+        </div>
+        
+        <!-- Sidebar Right: Tutor -->
+        <div class="sidebar-right">
+            <div class="tutor-header">
+                <div class="tutor-title">🤖 VLearn Tutor</div>
+                <div class="tutor-subtitle">Hỏi & học theo slide</div>
+            </div>
+            
+            <div class="chat-history" id="chat-history">
+                <!-- Messages will be loaded here -->
+            </div>
+            
+            <div class="tutor-input-area">
+                <label class="input-label">Bôi đen đoạn text ở trên, sau đó hỏi:</label>
+                <div class="highlight-box" id="highlight-display">
+                    Chưa chọn đoạn văn
+                </div>
+                <textarea id="question-input" placeholder="VD: Tại sao Transformer lại quan trọng?" rows="3"></textarea>
+                <div class="button-group">
+                    <button class="btn-highlight" onclick="selectHighlight()">📌 Bôi đen</button>
+                    <button class="btn-send" onclick="sendQuestion()">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+        // Real chat data from the dataset
+        const chatData = {
+            'day1-1': [
+                {
+                    student: '(Trang 12, đoạn được chọn: "cơ chế attention")\ncơ chế attention là gì?',
+                    tutor: 'Attention là một cơ chế cho phép mô hình Transformer "chú ý" đến các phần khác nhau của input một cách khác nhau. Thay vì xử lý từng token tuần tự, attention cho phép mô hình so sánh mối quan hệ giữa tất cả các token cùng lúc.',
+                    citations: '[12] Transformer với cơ chế attention'
+                },
+                {
+                    student: '(Trang 45, đoạn được chọn: "4 chiến lược tối ưu")\nGiải thích 4 chiến lược tối ưu ngữ cảnh?',
+                    tutor: 'Có 4 chiến lược chính:\n\n1. Write: Chuyển đổi trạng thái ra ngoài ngữ cảnh chính\n2. Select: Chỉ chọn lọc thông tin thực sự liên quan\n3. Compress: Tóm tắt lịch sử hội thoại\n4. Isolate: Tách biệt ngữ cảnh cho các tác vụ phụ',
+                    citations: '[45] 4 chiến lược tối ưu prompt'
+                }
+            ],
+            'day1-2': [
+                {
+                    student: '(Trang 3, đoạn được chọn: "tool calling")\ntool calling là gì?',
+                    tutor: 'Tool calling là kỹ thuật cho phép LLM tương tác với các công cụ bên ngoài (API, database, tính toán). Thay vì chỉ trả về văn bản, mô hình sẽ xác định công cụ cần thiết và trả về cấu trúc JSON để hệ thống thực thi.',
+                    citations: '[3, 96] Tool calling trong Prompt Engineering'
+                }
+            ],
+            'day2-1': [
+                {
+                    student: '(Trang 50, đoạn được chọn: "định nghĩa bài toán")\nLàm sao để định nghĩa bài toán AI đúng cách?',
+                    tutor: 'Định nghĩa bài toán AI cần có: (1) User cụ thể, (2) Job/tác vụ họ đang làm, (3) Pain point rõ ràng, (4) Bằng chứng về pain, (5) Impact mong muốn.',
+                    citations: '[50] Cách định nghĩa bài toán cho AI'
+                }
+            ],
+            'day2-2': [
+                {
+                    student: '(Trang 25, đoạn được chọn: "JTBD")\nJTBD framework là gì?',
+                    tutor: 'JTBD (Jobs to Be Done) là framework hiểu người dùng thực sự cần gì, thay vì chỉ nói về features. Nó trả lời: Khi [tình huống], người dùng muốn [cách hành động], để [kết quả mong muốn].',
+                    citations: '[25] JTBD Framework'
+                }
+            ]
+        };
+        
+        function goHome() {
+            document.getElementById('home-screen').style.display = 'flex';
+            document.getElementById('main-layout').style.display = 'none';
+            document.getElementById('header-title').style.display = 'none';
+        }
+        
+        function startCourse() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('main-layout').style.display = 'flex';
+            document.getElementById('header-title').style.display = 'block';
+            
+            // Load default material
+            loadSlideContent('day1-1');
+            loadChatHistory('day1-1');
+        }
+        
+        function selectMaterial(materialId, element) {
+            // Update active state
+            document.querySelectorAll('.material-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Load slide content and chat
+            loadSlideContent(materialId);
+            loadChatHistory(materialId);
+        }
+        
+        function loadSlideContent(materialId) {
+            const contents = {
+                'day1-1': {
+                    title: 'AI & LLM Foundation',
+                    subtitle: 'Large Language Models & Prompt Engineering',
+                    content: 'Large Language Models (LLM) là các mô hình học tập được huấn luyện trên một lượng lớn dữ liệu văn bản, cho phép chúng dự đoán token tiếp theo với xác suất cao. Các LLM hiện đại sử dụng kiến trúc Transformer với cơ chế attention giúp mô hình tập trung vào các phần quan trọng của input.'
+                },
+                'day1-2': {
+                    title: 'Prompt Engineering Basics',
+                    subtitle: 'Kỹ thuật viết prompt hiệu quả',
+                    content: 'Prompt Engineering là kỹ thuật viết câu lệnh (prompt) để hướng dẫn LLM thực hiện tác vụ cụ thể. Một prompt tốt cần rõ ràng, cung cấp ngữ cảnh, và chỉ định format output mong muốn.'
+                },
+                'day2-1': {
+                    title: 'Xác định bài toán cho AI',
+                    subtitle: 'Problem Definition & Discovery',
+                    content: 'Xác định bài toán cho AI là bước đầu tiên và quan trọng nhất. Cần tìm được: User cụ thể → Job họ đang làm → Pain point → Bằng chứng → Giải pháp AI phù hợp.'
+                },
+                'day2-2': {
+                    title: 'JTBD Framework',
+                    subtitle: 'Jobs to Be Done',
+                    content: 'JTBD giúp hiểu người dùng từ góc nhìn công việc họ cần hoàn thành. Công thức: When [situation], I want to [action], so I can [outcome].'
+                },
+                'day2-3': {
+                    title: 'Evidence & Impact',
+                    subtitle: 'Chứng minh bằng dữ liệu',
+                    content: 'Để chứng minh pain point, cần: (1) Mining data thật, (2) Khảo sát user, (3) Ghi log đầy đủ. Impact được tính: bao nhiêu người × tần suất × tốn gì.'
+                },
+                'day3-1': {
+                    title: 'Writing AI Spec',
+                    subtitle: 'Viết AI Specification',
+                    content: 'AI Spec là tài liệu chi tiết mô tả: User & Job, Problem & Evidence, Slice (lát cắt), Automation level, Error scenarios, Testing criteria.'
+                },
+                'day3-2': {
+                    title: 'Testing & Evaluation',
+                    subtitle: 'Golden set, quality bar, evaluation',
+                    content: 'Testing AI cần: Golden set ≥20 cases, định nghĩa chất lượng kiểm chứng được, quality bar bằng %, bảng kết quả có % đạt.'
+                }
+            };
+            
+            const data = contents[materialId] || contents['day1-1'];
+            document.querySelector('.slide-title').textContent = data.title;
+            document.querySelector('.slide-subtitle').textContent = data.subtitle;
+            document.getElementById('slide-content').textContent = data.content;
+        }
+        
+        function loadChatHistory(materialId) {
+            const messages = chatData[materialId] || chatData['day1-1'];
+            const chatContainer = document.getElementById('chat-history');
+            chatContainer.innerHTML = '';
+            
+            messages.forEach((msg, index) => {
+                const studentDiv = document.createElement('div');
+                studentDiv.className = 'chat-message message-student';
+                studentDiv.style.animationDelay = `${index * 0.1}s`;
+                studentDiv.innerHTML = `
+                    <div class="message-label">Học viên</div>
+                    <div class="message-content">${msg.student}</div>
+                `;
+                chatContainer.appendChild(studentDiv);
+                
+                const tutorDiv = document.createElement('div');
+                tutorDiv.className = 'chat-message message-tutor';
+                tutorDiv.style.animationDelay = `${index * 0.1 + 0.05}s`;
+                tutorDiv.innerHTML = `
+                    <div class="message-label">Tutor</div>
+                    <div class="message-content">${msg.tutor}</div>
+                    <div class="message-citations">📚 ${msg.citations}</div>
+                `;
+                chatContainer.appendChild(tutorDiv);
+            });
+            
+            // Scroll to bottom smoothly
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 100);
+        }
+        
+        function selectHighlight() {
+            const selected = window.getSelection().toString().trim();
+            if (selected) {
+                const highlightBox = document.getElementById('highlight-display');
+                highlightBox.textContent = `📌 "${selected}"`;
+                highlightBox.classList.add('active');
+            } else {
+                alert('Vui lòng bôi đen đoạn text cần hỏi');
+            }
+        }
+        
+        function sendQuestion() {
+            const question = document.getElementById('question-input').value.trim();
+            const highlightText = document.getElementById('highlight-display').textContent;
+            
+            if (!question) {
+                alert('Vui lòng nhập câu hỏi');
+                return;
+            }
+            
+            const chatContainer = document.getElementById('chat-history');
+            
+            // Add student message
+            const studentDiv = document.createElement('div');
+            studentDiv.className = 'chat-message message-student';
+            studentDiv.innerHTML = `
+                <div class="message-label">Bạn</div>
+                <div class="message-content">${highlightText}\n${question}</div>
+            `;
+            chatContainer.appendChild(studentDiv);
+            
+            // Auto scroll to bottom
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 50);
+            
+            // Clear input
+            document.getElementById('question-input').value = '';
+            document.getElementById('highlight-display').textContent = 'Chưa chọn đoạn văn';
+            document.getElementById('highlight-display').classList.remove('active');
+            
+            // Add loading indicator
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'chat-message message-tutor loading';
+            loadingDiv.id = 'tutor-loading';
+            loadingDiv.innerHTML = `
+                <div class="message-label">Tutor</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            chatContainer.appendChild(loadingDiv);
+            
+            // Auto scroll
+            setTimeout(() => {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 50);
+            
+            // Simulate tutor response after 1.5 seconds
+            setTimeout(() => {
+                const loadingElement = document.getElementById('tutor-loading');
+                if (loadingElement) {
+                    loadingElement.remove();
+                }
+                
+                const tutorDiv = document.createElement('div');
+                tutorDiv.className = 'chat-message message-tutor';
+                tutorDiv.innerHTML = `
+                    <div class="message-label">Tutor</div>
+                    <div class="message-content">Tutor đang xử lý câu hỏi của bạn...\n\n💡 CP3: Sẽ thêm AI thật để sinh phản hồi tự động.</div>
+                    <div class="message-citations">📚 Citations sẽ hiển thị ở đây</div>
+                `;
+                chatContainer.appendChild(tutorDiv);
+                
+                // Auto scroll to new response
+                setTimeout(() => {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 50);
+            }, 1500);
+            
+            // Focus back to input
+            document.getElementById('question-input').focus();
+        }
+        
+        function toggleDay(day) {
+            // Simple day toggle (optional enhancement)
+            console.log('Toggle day', day);
+        }
+        
+        // Initialize with home screen
+        window.onload = function() {
+            goHome();
+            
+            // Add keyboard support for sending questions
+            const questionInput = document.getElementById('question-input');
+            if (questionInput) {
+                questionInput.addEventListener('keydown', function(e) {
+                    // Ctrl+Enter or Cmd+Enter to send
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                        sendQuestion();
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>

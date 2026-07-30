@@ -1,399 +1,994 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-<<<<<<< HEAD
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VLearn — AI &amp; LLM Foundation</title>
-<style>
-  :root {
-    --green: #1a5f3c;
-    --green-dark: #144a2f;
-    --green-soft: #f0f8f5;
-    --green-line: #c9e0d5;
-    --ink: #1d2b24;
-    --muted: #6b7a72;
-    --line: #e2e6e4;
-    --bg: #f5f6f5;
-    --amber: #8a5a2b;
-    --amber-soft: #fdf6ec;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg); color: var(--ink);
-    height: 100vh; overflow: hidden; font-size: 14px;
-  }
-  button { font-family: inherit; cursor: pointer; border: none; }
-  :focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VLearn — AI &amp; LLM Foundation</title>
+    <style>
+      :root {
+        --green: #1a5f3c;
+        --green-dark: #144a2f;
+        --green-soft: #f0f8f5;
+        --green-line: #c9e0d5;
+        --ink: #1d2b24;
+        --muted: #6b7a72;
+        --line: #e2e6e4;
+        --bg: #f5f6f5;
+        --amber: #8a5a2b;
+        --amber-soft: #fdf6ec;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        height: 100vh;
+        overflow: hidden;
+        font-size: 14px;
+      }
+      button {
+        font-family: inherit;
+        cursor: pointer;
+        border: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+      }
 
-  /* ---------- Header ---------- */
-  .header {
-    background: #fff; border-bottom: 1px solid var(--line);
-    padding: 0 20px; display: flex; align-items: center; gap: 16px; height: 58px;
-  }
-  .logo { font-size: 18px; font-weight: 700; color: var(--green); cursor: pointer; }
-  .course-title { font-size: 13px; color: var(--muted); font-weight: 600; }
-  .crumb { font-size: 13px; color: var(--muted); }
-  .crumb b { color: var(--ink); }
-  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-  .mock-badge {
-    font-size: 11px; font-weight: 700; letter-spacing: .04em;
-    background: var(--amber-soft); color: var(--amber);
-    border: 1px solid #e8d5b8; border-radius: 99px; padding: 4px 10px;
-  }
-  .btn-ghost {
-    font-size: 13px; font-weight: 600; color: var(--green);
-    background: #fff; border: 1px solid var(--green-line);
-    border-radius: 6px; padding: 6px 12px;
-  }
-  .btn-ghost:hover { background: var(--green-soft); }
+      /* ---------- Header ---------- */
+      .header {
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        height: 58px;
+      }
+      .logo {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--green);
+        cursor: pointer;
+      }
+      .course-title {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .crumb {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .crumb b {
+        color: var(--ink);
+      }
+      .header-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .mock-badge {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: var(--amber-soft);
+        color: var(--amber);
+        border: 1px solid #e8d5b8;
+        border-radius: 99px;
+        padding: 4px 10px;
+      }
+      .btn-ghost {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--green);
+        background: #fff;
+        border: 1px solid var(--green-line);
+        border-radius: 6px;
+        padding: 6px 12px;
+      }
+      .btn-ghost:hover {
+        background: var(--green-soft);
+      }
 
-  /* ---------- Trang chu ---------- */
-  #home-screen {
-    height: calc(100vh - 58px); overflow-y: auto;
-    background: linear-gradient(135deg, #f5f6f5 0%, #e8f4f0 100%);
-    padding: 48px 24px;
-  }
-  .home-inner { max-width: 720px; margin: 0 auto; }
-  .home-inner h1 { font-size: 40px; color: var(--green); font-weight: 700; letter-spacing: -.02em; }
-  .home-lead { font-size: 17px; color: var(--muted); margin: 12px 0 32px; line-height: 1.6; }
-  .card {
-    background: #fff; border: 1px solid var(--line); border-radius: 10px;
-    padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-bottom: 20px;
-  }
-  .card h2 { font-size: 17px; color: var(--green); margin-bottom: 14px; }
-  .course-meta { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
-  .course-meta strong { color: var(--ink); font-size: 14px; }
-  .progress-wrap { margin-bottom: 20px; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-  .progress-bar { height: 7px; background: var(--line); border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .4s; }
-  .btn-primary {
-    background: var(--green); color: #fff; padding: 13px 32px;
-    border-radius: 7px; font-size: 15px; font-weight: 600; transition: background .15s;
-  }
-  .btn-primary:hover { background: var(--green-dark); }
-  .btn-primary:disabled { opacity: .5; cursor: default; }
-  .howto {
-    background: var(--green-soft); border-left: 4px solid var(--green);
-    padding: 18px 20px; border-radius: 6px; font-size: 13px; line-height: 1.7;
-  }
-  .howto strong { color: var(--green); }
-  .howto ol { margin: 8px 0 0 20px; }
+      /* ---------- Trang chu ---------- */
+      #home-screen {
+        height: calc(100vh - 58px);
+        overflow-y: auto;
+        background: linear-gradient(135deg, #f5f6f5 0%, #e8f4f0 100%);
+        padding: 48px 24px;
+      }
+      .home-inner {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .home-inner h1 {
+        font-size: 40px;
+        color: var(--green);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .home-lead {
+        font-size: 17px;
+        color: var(--muted);
+        margin: 12px 0 32px;
+        line-height: 1.6;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+      }
+      .card h2 {
+        font-size: 17px;
+        color: var(--green);
+        margin-bottom: 14px;
+      }
+      .course-meta {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+      .course-meta strong {
+        color: var(--ink);
+        font-size: 14px;
+      }
+      .progress-wrap {
+        margin-bottom: 20px;
+      }
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .progress-bar {
+        height: 7px;
+        background: var(--line);
+        border-radius: 99px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background: var(--green);
+        border-radius: 99px;
+        transition: width 0.4s;
+      }
+      .btn-primary {
+        background: var(--green);
+        color: #fff;
+        padding: 13px 32px;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: 600;
+        transition: background 0.15s;
+      }
+      .btn-primary:hover {
+        background: var(--green-dark);
+      }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .howto {
+        background: var(--green-soft);
+        border-left: 4px solid var(--green);
+        padding: 18px 20px;
+        border-radius: 6px;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+      .howto strong {
+        color: var(--green);
+      }
+      .howto ol {
+        margin: 8px 0 0 20px;
+      }
 
-  /* ---------- Layout 3 cot ---------- */
-  .main-layout { display: flex; height: calc(100vh - 58px); }
+      /* ---------- Layout 3 cot ---------- */
+      .main-layout {
+        display: flex;
+        height: calc(100vh - 58px);
+      }
 
-  /* Sidebar trai */
-  .sidebar-left {
-    width: 260px; flex: 0 0 260px; background: #fff;
-    border-right: 1px solid var(--line); overflow-y: auto; padding: 16px 0;
-  }
-  .sidebar-title {
-    font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--muted);
-    padding: 0 16px 12px; text-transform: uppercase;
-  }
-  .day-group { margin-bottom: 4px; }
-  .day-header {
-    display: flex; align-items: center; gap: 8px;
-    padding: 9px 16px; font-size: 13px; font-weight: 700; color: var(--ink);
-    cursor: pointer; user-select: none;
-  }
-  .day-header:hover { background: var(--bg); }
-  .caret { font-size: 10px; color: var(--muted); transition: transform .15s; }
-  .day-group.closed .caret { transform: rotate(-90deg); }
-  .day-group.closed .material-item { display: none; }
-  .material-item {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    padding: 8px 16px 8px 34px; font-size: 13px; color: var(--muted);
-    cursor: pointer; border-left: 3px solid transparent;
-  }
-  .material-item:hover { background: var(--bg); color: var(--ink); }
-  .material-item.active {
-    background: var(--green-soft); color: var(--green);
-    font-weight: 600; border-left-color: var(--green);
-  }
-  .pages-tag { font-size: 11px; color: var(--muted); font-weight: 500; }
+      /* Sidebar trai */
+      .sidebar-left {
+        width: 260px;
+        flex: 0 0 260px;
+        background: #fff;
+        border-right: 1px solid var(--line);
+        overflow-y: auto;
+        padding: 16px 0;
+      }
+      .sidebar-title {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: var(--muted);
+        padding: 0 16px 12px;
+        text-transform: uppercase;
+      }
+      .day-group {
+        margin-bottom: 4px;
+      }
+      .day-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--ink);
+        cursor: pointer;
+        user-select: none;
+      }
+      .day-header:hover {
+        background: var(--bg);
+      }
+      .caret {
+        font-size: 10px;
+        color: var(--muted);
+        transition: transform 0.15s;
+      }
+      .day-group.closed .caret {
+        transform: rotate(-90deg);
+      }
+      .day-group.closed .material-item {
+        display: none;
+      }
+      .material-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 16px 8px 34px;
+        font-size: 13px;
+        color: var(--muted);
+        cursor: pointer;
+        border-left: 3px solid transparent;
+      }
+      .material-item:hover {
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .material-item.active {
+        background: var(--green-soft);
+        color: var(--green);
+        font-weight: 600;
+        border-left-color: var(--green);
+      }
+      .pages-tag {
+        font-size: 11px;
+        color: var(--muted);
+        font-weight: 500;
+      }
 
-  /* Giua: slide */
-  .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 20px; }
-  .slide-display {
-    flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 10px;
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-  .slide-head { padding: 20px 26px 14px; border-bottom: 1px solid var(--line); }
-  .slide-title { font-size: 20px; font-weight: 700; }
-  .slide-subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
-  .slide-body { flex: 1; overflow-y: auto; padding: 26px; }
-  .page-no {
-    display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
-    color: var(--green); background: var(--green-soft);
-    border: 1px solid var(--green-line); border-radius: 99px;
-    padding: 3px 10px; margin-bottom: 14px;
-  }
-  .page-heading { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
-  .page-text { font-size: 15px; line-height: 1.75; white-space: pre-wrap; }
-  .page-text::selection { background: #cfe8dd; }
-  .slide-foot {
-    border-top: 1px solid var(--line); padding: 12px 26px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .btn-page {
-    font-size: 13px; font-weight: 600; color: var(--green);
-    background: #fff; border: 1px solid var(--green-line);
-    border-radius: 6px; padding: 7px 14px;
-  }
-  .btn-page:hover:not(:disabled) { background: var(--green-soft); }
-  .btn-page:disabled { color: var(--muted); border-color: var(--line); cursor: default; }
-  .page-count { font-size: 13px; color: var(--muted); font-weight: 600; }
-  .foot-hint { margin-left: auto; font-size: 12px; color: var(--muted); }
+      /* Giua: slide */
+      .content-area {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        padding: 20px;
+      }
+      .slide-display {
+        flex: 1;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .slide-head {
+        padding: 20px 26px 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .slide-title {
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .slide-subtitle {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      .slide-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 26px;
+      }
+      .page-no {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        color: var(--green);
+        background: var(--green-soft);
+        border: 1px solid var(--green-line);
+        border-radius: 99px;
+        padding: 3px 10px;
+        margin-bottom: 14px;
+      }
+      .page-heading {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .page-text {
+        font-size: 15px;
+        line-height: 1.75;
+        white-space: pre-wrap;
+      }
+      .page-text::selection {
+        background: #cfe8dd;
+      }
+      .slide-foot {
+        border-top: 1px solid var(--line);
+        padding: 12px 26px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .btn-page {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--green);
+        background: #fff;
+        border: 1px solid var(--green-line);
+        border-radius: 6px;
+        padding: 7px 14px;
+      }
+      .btn-page:hover:not(:disabled) {
+        background: var(--green-soft);
+      }
+      .btn-page:disabled {
+        color: var(--muted);
+        border-color: var(--line);
+        cursor: default;
+      }
+      .page-count {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .foot-hint {
+        margin-left: auto;
+        font-size: 12px;
+        color: var(--muted);
+      }
 
-  /* Sidebar phai: tutor */
-  .sidebar-right {
-    width: 380px; flex: 0 0 380px; background: #fff;
-    border-left: 1px solid var(--line); display: flex; flex-direction: column;
-  }
-  .tutor-header { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: center; }
-  .tutor-title { font-size: 15px; font-weight: 700; }
-  .tutor-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
-  .btn-clear {
-    margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted);
-    background: none; padding: 4px 8px; border-radius: 5px;
-  }
-  .btn-clear:hover { background: var(--bg); color: var(--ink); }
-  .chat-history { flex: 1; overflow-y: auto; padding: 16px; }
-  .chat-empty { font-size: 13px; color: var(--muted); line-height: 1.7; text-align: center; padding: 30px 10px; }
-  .msg { margin-bottom: 14px; }
-  .msg-label { font-size: 11px; font-weight: 800; letter-spacing: .07em; color: var(--muted); margin-bottom: 5px; }
-  .msg-content {
-    font-size: 14px; line-height: 1.65; white-space: pre-wrap;
-    border-radius: 8px; padding: 11px 13px;
-  }
-  .msg-student .msg-content { background: var(--bg); border: 1px solid var(--line); }
-  .msg-tutor .msg-content { background: var(--green-soft); border: 1px solid var(--green-line); }
-  .msg-quote {
-    font-size: 12px; color: var(--muted); font-style: italic;
-    border-left: 3px solid var(--green-line); padding-left: 8px; margin-bottom: 7px;
-  }
-  .move-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
-  .tag {
-    font-size: 11px; font-weight: 800; letter-spacing: .05em;
-    border-radius: 99px; padding: 3px 9px;
-    background: #e3f0ea; color: var(--green); border: 1px solid var(--green-line);
-  }
-  .tag.warn { background: var(--amber-soft); color: var(--amber); border-color: #e8d5b8; }
-  .tag.page { background: #fff; color: var(--muted); border-color: var(--line); font-weight: 700; }
-  .typing { display: flex; gap: 4px; padding: 4px 0; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); opacity: .4; animation: blink 1.2s infinite; }
-  .dot:nth-child(2) { animation-delay: .2s; }
-  .dot:nth-child(3) { animation-delay: .4s; }
-  @keyframes blink { 0%,60%,100% { opacity: .25 } 30% { opacity: 1 } }
-  @media (prefers-reduced-motion: reduce) { .dot { animation: none; opacity: .5 } }
+      /* Sidebar phai: tutor */
+      .sidebar-right {
+        width: 380px;
+        flex: 0 0 380px;
+        background: #fff;
+        border-left: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+      }
+      .tutor-header {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+      }
+      .tutor-title {
+        font-size: 15px;
+        font-weight: 700;
+      }
+      .tutor-subtitle {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .btn-clear {
+        margin-left: auto;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        background: none;
+        padding: 4px 8px;
+        border-radius: 5px;
+      }
+      .btn-clear:hover {
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .chat-history {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+      }
+      .chat-empty {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.7;
+        text-align: center;
+        padding: 30px 10px;
+      }
+      .msg {
+        margin-bottom: 14px;
+      }
+      .msg-label {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin-bottom: 5px;
+      }
+      .msg-content {
+        font-size: 14px;
+        line-height: 1.65;
+        white-space: pre-wrap;
+        border-radius: 8px;
+        padding: 11px 13px;
+      }
+      .msg-student .msg-content {
+        background: var(--bg);
+        border: 1px solid var(--line);
+      }
+      .msg-tutor .msg-content {
+        background: var(--green-soft);
+        border: 1px solid var(--green-line);
+      }
+      .msg-quote {
+        font-size: 12px;
+        color: var(--muted);
+        font-style: italic;
+        border-left: 3px solid var(--green-line);
+        padding-left: 8px;
+        margin-bottom: 7px;
+      }
+      .move-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 7px;
+      }
+      .tag {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        border-radius: 99px;
+        padding: 3px 9px;
+        background: #e3f0ea;
+        color: var(--green);
+        border: 1px solid var(--green-line);
+      }
+      .tag.warn {
+        background: var(--amber-soft);
+        color: var(--amber);
+        border-color: #e8d5b8;
+      }
+      .tag.page {
+        background: #fff;
+        color: var(--muted);
+        border-color: var(--line);
+        font-weight: 700;
+      }
+      .typing {
+        display: flex;
+        gap: 4px;
+        padding: 4px 0;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--green);
+        opacity: 0.4;
+        animation: blink 1.2s infinite;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes blink {
+        0%,
+        60%,
+        100% {
+          opacity: 0.25;
+        }
+        30% {
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .dot {
+          animation: none;
+          opacity: 0.5;
+        }
+      }
 
-  .tutor-input-area { border-top: 1px solid var(--line); padding: 14px; }
-  .highlight-box {
-    font-size: 12px; color: var(--muted); background: var(--bg);
-    border: 1px dashed var(--line); border-radius: 7px;
-    padding: 9px 11px; margin-bottom: 10px; line-height: 1.5;
-    display: flex; gap: 8px; align-items: flex-start;
-  }
-  .highlight-box.active {
-    background: var(--green-soft); border-style: solid;
-    border-color: var(--green-line); color: var(--ink);
-  }
-  .highlight-text { flex: 1; }
-  .btn-x { background: none; color: var(--muted); font-size: 15px; line-height: 1; padding: 0 2px; }
-  .btn-x:hover { color: var(--ink); }
-  #question-input {
-    width: 100%; font: inherit; font-size: 14px; color: inherit;
-    border: 1px solid var(--line); border-radius: 7px; padding: 10px 11px;
-    resize: vertical; min-height: 64px; line-height: 1.5;
-  }
-  .btn-row { display: flex; gap: 8px; margin-top: 10px; }
-  .btn-send {
-    flex: 1; background: var(--green); color: #fff;
-    border-radius: 7px; padding: 11px; font-size: 14px; font-weight: 600;
-  }
-  .btn-send:hover:not(:disabled) { background: var(--green-dark); }
-  .btn-send:disabled { opacity: .5; cursor: default; }
-  .input-hint { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; }
+      .tutor-input-area {
+        border-top: 1px solid var(--line);
+        padding: 14px;
+      }
+      .highlight-box {
+        font-size: 12px;
+        color: var(--muted);
+        background: var(--bg);
+        border: 1px dashed var(--line);
+        border-radius: 7px;
+        padding: 9px 11px;
+        margin-bottom: 10px;
+        line-height: 1.5;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+      }
+      .highlight-box.active {
+        background: var(--green-soft);
+        border-style: solid;
+        border-color: var(--green-line);
+        color: var(--ink);
+      }
+      .highlight-text {
+        flex: 1;
+      }
+      .btn-x {
+        background: none;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1;
+        padding: 0 2px;
+      }
+      .btn-x:hover {
+        color: var(--ink);
+      }
+      #question-input {
+        width: 100%;
+        font: inherit;
+        font-size: 14px;
+        color: inherit;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        padding: 10px 11px;
+        resize: vertical;
+        min-height: 64px;
+        line-height: 1.5;
+      }
+      .btn-row {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .btn-send {
+        flex: 1;
+        background: var(--green);
+        color: #fff;
+        border-radius: 7px;
+        padding: 11px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .btn-send:hover:not(:disabled) {
+        background: var(--green-dark);
+      }
+      .btn-send:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .input-hint {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 8px;
+        text-align: center;
+      }
 
-  @media (max-width: 1100px) {
-    .sidebar-left { display: none; }
-    .sidebar-right { width: 330px; flex-basis: 330px; }
-  }
-</style>
-</head>
-<body>
-
-<!-- ================= HEADER ================= -->
-<div class="header">
-  <div class="logo" onclick="veTrangChu()" title="Về trang chủ">VLearn</div>
-  <div class="course-title" id="header-title" style="display:none">COMP2010 · Khóa 3 + 4 Phase 1</div>
-  <div class="crumb" id="header-crumb" style="display:none"></div>
-  <div class="header-right">
-    <span class="mock-badge" id="mock-badge" style="display:none">CP2 · PHẢN HỒI MÔ PHỎNG</span>
-    <button class="btn-ghost" id="btn-home" style="display:none" onclick="veTrangChu()">Trang chủ</button>
-  </div>
-</div>
-
-<!-- ================= TRANG CHỦ ================= -->
-<div id="home-screen">
-  <div class="home-inner">
-    <h1>Chào mừng đến VLearn</h1>
-    <p class="home-lead">
-      Nền tảng học tập có AI Tutor đi kèm từng trang tài liệu. Bôi đen chỗ đang bí,
-      hỏi ngay tại chỗ, và nhận câu trả lời có dẫn số trang.
-    </p>
-
-    <div class="card">
-      <h2>Khóa học của bạn</h2>
-      <div class="course-meta">
-        <strong>COMP2010 · Khóa 3 + 4 Phase 1</strong><br>
-        AI &amp; LLM thực chiến · 6 ngày · 7 tài liệu
+      @media (max-width: 1100px) {
+        .sidebar-left {
+          display: none;
+        }
+        .sidebar-right {
+          width: 330px;
+          flex-basis: 330px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ================= HEADER ================= -->
+    <div class="header">
+      <div class="logo" onclick="veTrangChu()" title="Về trang chủ">VLearn</div>
+      <div class="course-title" id="header-title" style="display: none">
+        COMP2010 · Khóa 3 + 4 Phase 1
       </div>
-      <div class="progress-wrap">
-        <div class="progress-label">
-          <span>Tiến độ của bạn</span>
-          <span id="progress-text">0 / 7 tài liệu</span>
+      <div class="crumb" id="header-crumb" style="display: none"></div>
+      <div class="header-right">
+        <span class="mock-badge" id="mock-badge" style="display: none"
+          >CP2 · PHẢN HỒI MÔ PHỎNG</span
+        >
+        <button
+          class="btn-ghost"
+          id="btn-home"
+          style="display: none"
+          onclick="veTrangChu()"
+        >
+          Trang chủ
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= TRANG CHỦ ================= -->
+    <div id="home-screen">
+      <div class="home-inner">
+        <h1>Chào mừng đến VLearn</h1>
+        <p class="home-lead">
+          Nền tảng học tập có AI Tutor đi kèm từng trang tài liệu. Bôi đen chỗ
+          đang bí, hỏi ngay tại chỗ, và nhận câu trả lời có dẫn số trang.
+        </p>
+
+        <div class="card">
+          <h2>Khóa học của bạn</h2>
+          <div class="course-meta">
+            <strong>COMP2010 · Khóa 3 + 4 Phase 1</strong><br />
+            AI &amp; LLM thực chiến · 6 ngày · 7 tài liệu
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Tiến độ của bạn</span>
+              <span id="progress-text">0 / 7 tài liệu</span>
+            </div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill"
+                id="progress-fill"
+                style="width: 0%"
+              ></div>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="batDauHoc()">Bắt đầu học</button>
         </div>
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-      </div>
-      <button class="btn-primary" onclick="batDauHoc()">Bắt đầu học</button>
-    </div>
 
-    <div class="howto">
-      <strong>Cách sử dụng</strong>
-      <ol>
-        <li>Chọn tài liệu ở cột bên trái</li>
-        <li>Bôi đen đoạn văn bạn muốn hỏi, đoạn đó sẽ tự vào ô ngữ cảnh</li>
-        <li>Nhập câu hỏi rồi bấm Gửi cho Tutor</li>
-        <li>Xem Tutor chọn cách trả lời nào và dẫn trang bao nhiêu</li>
-      </ol>
-    </div>
-  </div>
-</div>
-
-<!-- ================= LAYOUT 3 CỘT ================= -->
-<div class="main-layout" id="main-layout" style="display:none">
-
-  <!-- Cột trái: tài liệu -->
-  <div class="sidebar-left">
-    <div class="sidebar-title">Tài liệu học tập</div>
-    <div id="material-list"></div>
-  </div>
-
-  <!-- Cột giữa: slide -->
-  <div class="content-area">
-    <div class="slide-display">
-      <div class="slide-head">
-        <div class="slide-title" id="slide-title"></div>
-        <div class="slide-subtitle" id="slide-subtitle"></div>
-      </div>
-      <div class="slide-body" id="slide-body"></div>
-      <div class="slide-foot">
-        <button class="btn-page" id="btn-prev" onclick="doiTrang(-1)">Trang trước</button>
-        <span class="page-count" id="page-count"></span>
-        <button class="btn-page" id="btn-next" onclick="doiTrang(1)">Trang sau</button>
-        <span class="foot-hint">Bôi đen một đoạn để hỏi Tutor về đoạn đó</span>
+        <div class="howto">
+          <strong>Cách sử dụng</strong>
+          <ol>
+            <li>Chọn tài liệu ở cột bên trái</li>
+            <li>Bôi đen đoạn văn bạn muốn hỏi, đoạn đó sẽ tự vào ô ngữ cảnh</li>
+            <li>Nhập câu hỏi rồi bấm Gửi cho Tutor</li>
+            <li>Xem Tutor chọn cách trả lời nào và dẫn trang bao nhiêu</li>
+          </ol>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Cột phải: tutor -->
-  <div class="sidebar-right">
-    <div class="tutor-header">
-      <div>
-        <div class="tutor-title">VLearn Tutor</div>
-        <div class="tutor-subtitle">Hỏi và học theo từng trang</div>
+    <!-- ================= LAYOUT 3 CỘT ================= -->
+    <div class="main-layout" id="main-layout" style="display: none">
+      <!-- Cột trái: tài liệu -->
+      <div class="sidebar-left">
+        <div class="sidebar-title">Tài liệu học tập</div>
+        <div id="material-list"></div>
       </div>
-      <button class="btn-clear" onclick="xoaHoiThoai()">Xóa hội thoại</button>
+
+      <!-- Cột giữa: slide -->
+      <div class="content-area">
+        <div class="slide-display">
+          <div class="slide-head">
+            <div class="slide-title" id="slide-title"></div>
+            <div class="slide-subtitle" id="slide-subtitle"></div>
+          </div>
+          <div class="slide-body" id="slide-body"></div>
+          <div class="slide-foot">
+            <button class="btn-page" id="btn-prev" onclick="doiTrang(-1)">
+              Trang trước
+            </button>
+            <span class="page-count" id="page-count"></span>
+            <button class="btn-page" id="btn-next" onclick="doiTrang(1)">
+              Trang sau
+            </button>
+            <span class="foot-hint"
+              >Bôi đen một đoạn để hỏi Tutor về đoạn đó</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột phải: tutor -->
+      <div class="sidebar-right">
+        <div class="tutor-header">
+          <div>
+            <div class="tutor-title">VLearn Tutor</div>
+            <div class="tutor-subtitle">Hỏi và học theo từng trang</div>
+          </div>
+          <button class="btn-clear" onclick="xoaHoiThoai()">
+            Xóa hội thoại
+          </button>
+        </div>
+
+        <div class="chat-history" id="chat-history"></div>
+
+        <div class="tutor-input-area">
+          <div class="highlight-box" id="highlight-box">
+            <span class="highlight-text" id="highlight-text"
+              >Chưa chọn đoạn nào. Bạn có thể hỏi thẳng, Tutor sẽ tìm trong tài
+              liệu đang mở.</span
+            >
+            <button
+              class="btn-x"
+              id="btn-x-highlight"
+              onclick="boChonDoan()"
+              style="display: none"
+              title="Bỏ chọn đoạn"
+            >
+              ×
+            </button>
+          </div>
+          <textarea
+            id="question-input"
+            placeholder="Nhập câu hỏi của bạn, ví dụ: cơ chế attention là gì? cho ví dụ"
+          ></textarea>
+          <div class="btn-row">
+            <button class="btn-send" id="btn-send" onclick="guiCauHoi()">
+              Gửi cho Tutor
+            </button>
+          </div>
+          <div class="input-hint">Ctrl + Enter để gửi nhanh</div>
+        </div>
+      </div>
     </div>
 
-    <div class="chat-history" id="chat-history"></div>
-
-    <div class="tutor-input-area">
-      <div class="highlight-box" id="highlight-box">
-        <span class="highlight-text" id="highlight-text">Chưa chọn đoạn nào. Bạn có thể hỏi thẳng, Tutor sẽ tìm trong tài liệu đang mở.</span>
-        <button class="btn-x" id="btn-x-highlight" onclick="boChonDoan()" style="display:none" title="Bỏ chọn đoạn">×</button>
-      </div>
-      <textarea id="question-input" placeholder="Nhập câu hỏi của bạn, ví dụ: cơ chế attention là gì? cho ví dụ"></textarea>
-      <div class="btn-row">
-        <button class="btn-send" id="btn-send" onclick="guiCauHoi()">Gửi cho Tutor</button>
-      </div>
-      <div class="input-hint">Ctrl + Enter để gửi nhanh</div>
-    </div>
-  </div>
-</div>
-
-<script>
-/* =========================================================================
+    <script>
+      /* =========================================================================
    1. NỘI DUNG TÀI LIỆU
    Mỗi tài liệu là một danh sách trang. Số trang là thật, dùng cho citations.
    ========================================================================= */
-const TAI_LIEU = [
-  { day: 'Day 01: Nền tảng', items: [
-    { id: 'day1-1', ten: 'AI & LLM Foundation', phu: 'Mô hình ngôn ngữ lớn và kiến trúc Transformer', trang: [
-      { so: 1, tieuDe: 'Mô hình ngôn ngữ lớn là gì', noiDung: 'Mô hình ngôn ngữ lớn, viết tắt là LLM, được huấn luyện trên một khối lượng văn bản rất lớn để làm đúng một việc: dự đoán token tiếp theo. Toàn bộ khả năng viết văn, trả lời câu hỏi hay viết code đều mọc ra từ việc dự đoán token lặp lại nhiều lần.' },
-      { so: 2, tieuDe: 'Token và cách tính chi phí', noiDung: 'Token là đơn vị nhỏ hơn từ. Một từ tiếng Việt có thể bị tách thành hai đến ba token. Chi phí gọi API tính theo số token vào và số token ra, nên prompt càng dài thì càng tốn. Muốn giảm chi phí thì phải giảm ngữ cảnh gửi lên, không phải giảm số lần gọi.' },
-      { so: 3, tieuDe: 'Kiến trúc Transformer', noiDung: 'Transformer là kiến trúc nền của gần như mọi LLM hiện nay. Điểm khác biệt so với các mô hình trước là nó không xử lý câu theo thứ tự từng từ một, mà nhìn toàn bộ câu cùng lúc rồi tự quyết định phần nào quan trọng.' },
-      { so: 4, tieuDe: 'Cơ chế attention', noiDung: 'Attention cho phép mô hình chú ý đến các phần khác nhau của đầu vào với mức độ khác nhau. Với câu "con mèo ngồi trên bàn", khi xử lý từ "ngồi" thì mô hình chú ý mạnh vào "con mèo" và "bàn", vì đó là hai thứ quyết định nghĩa của hành động. Cơ chế này được tính bằng ba ma trận Q, K và V.' },
-      { so: 5, tieuDe: 'Multi-head attention', noiDung: 'Thay vì chỉ có một cách chú ý, mô hình chạy nhiều head song song. Mỗi head học một kiểu quan hệ khác nhau: một head bắt quan hệ ngữ pháp, một head bắt quan hệ nghĩa, một head bắt vị trí. Kết quả các head được ghép lại rồi đưa qua lớp tiếp theo.' },
-      { so: 6, tieuDe: 'Temperature và top-p', noiDung: 'Temperature điều khiển độ ngẫu nhiên khi chọn token. Để 0 thì mô hình luôn chọn token có xác suất cao nhất, trả lời ổn định nhưng khô. Để cao thì đa dạng hơn nhưng dễ bịa. Top-p thì giới hạn tập token được chọn theo tổng xác suất. Với bài toán cần chính xác, hãy để temperature thấp.' }
-    ]},
-    { id: 'day1-2', ten: 'Prompt Engineering cơ bản', phu: 'Bốn thành phần của một prompt tốt', trang: [
-      { so: 7, tieuDe: 'Bốn thành phần của prompt', noiDung: 'Một prompt dùng được thường có bốn phần: Role là mô hình đang đóng vai ai, Context là ngữ cảnh và dữ liệu kèm theo, Task là việc cụ thể cần làm, Format là hình dạng đầu ra mong muốn. Thiếu Format là lỗi hay gặp nhất, vì khi đó đầu ra mỗi lần một kiểu và không ghép được vào code.' },
-      { so: 8, tieuDe: 'Vì sao cần chỉ định định dạng đầu ra', noiDung: 'Nếu bạn cần đầu ra là JSON để hệ thống đọc, phải nói rõ trong prompt và mô tả từng trường. Không có schema nào để mô hình hay hệ thống kiểm tra tính hợp lệ trước khi gọi, nên chính prompt phải làm việc đó.' },
-      { so: 9, tieuDe: 'Tool calling', noiDung: 'Tool calling cho phép mô hình gọi ra ngoài: tra cứu API, đọc cơ sở dữ liệu, tính toán. Mô hình không tự thực thi, nó chỉ trả về tên tool và tham số dưới dạng có cấu trúc, còn hệ thống của bạn mới là chỗ thực thi thật.' },
-      { so: 10, tieuDe: 'RAG và grounding', noiDung: 'RAG là kỹ thuật tìm đoạn tài liệu liên quan rồi đưa vào prompt trước khi hỏi mô hình. Mục đích là buộc câu trả lời dựa trên tài liệu thật thay vì dựa vào ký ức của mô hình. Câu trả lời có dẫn nguồn được gọi là có grounding, và đây là cách chính để giảm bịa.' }
-    ]}
-  ]},
-  { day: 'Day 02: Xác định bài toán', items: [
-    { id: 'day2-1', ten: 'Xác định bài toán cho AI', phu: 'Từ yêu cầu mơ hồ đến vấn đề cụ thể', trang: [
-      { so: 11, tieuDe: 'Kỹ năng khó nhất', noiDung: 'Kỹ năng thiếu nhất hiện nay không phải là code mô hình, mà là biến một yêu cầu mơ hồ thành một bài toán cụ thể có thể triển khai được trong thời gian ngắn. Rất nhiều công ty tuyển AI engineer nhưng không có ai đặt được đề bài, nên cuối cùng không ra kết quả.' },
-      { so: 12, tieuDe: 'Đừng nhảy thẳng vào giải pháp', noiDung: 'Con người có quán tính nhảy thẳng vào giải pháp. Câu hỏi đúng phải là vấn đề là gì, rồi mới đến công nghệ nào giải nó. Yêu cầu kiểu làm một cái AI support cho công ty là chưa phải bài toán, vì chưa trả lời được support cho ai và để làm gì.' },
-      { so: 13, tieuDe: 'Double Diamond', noiDung: 'Double Diamond gồm hai kim cương: kim cương thứ nhất để tìm đúng vấn đề, kim cương thứ hai để tìm đúng giải pháp. Mỗi kim cương có một pha phân kỳ để mở rộng lựa chọn và một pha hội tụ để chốt lại. Làm đúng một cái sai thì tệ hơn làm sai một cái đúng.' },
-      { so: 14, tieuDe: 'Ma trận tác động và nỗ lực', noiDung: 'Vẽ hai trục: tác động và nỗ lực. Việc tác động cao mà nỗ lực thấp là quick win, làm trước. Tác động cao nỗ lực cao thì cần lên kế hoạch. Tác động thấp nỗ lực thấp thì làm khi rảnh. Tác động thấp nỗ lực cao thì bỏ. Ma trận này dùng để chốt việc, không phải để trang trí slide.' },
-      { so: 15, tieuDe: 'Mức tự động hóa', noiDung: 'Không phải việc gì cũng nên để AI làm hết. Automation là AI làm thay hoàn toàn, augmentation là AI hỗ trợ con người quyết định. Chọn mức nào phụ thuộc vào hậu quả khi sai. Việc mà sai một lần là gây thiệt hại lớn thì phải để con người chốt.' }
-    ]},
-    { id: 'day2-2', ten: 'JTBD Framework', phu: 'Jobs to Be Done', trang: [
-      { so: 16, tieuDe: 'JTBD là gì', noiDung: 'JTBD giúp nhìn người dùng theo công việc họ cần hoàn thành, thay vì theo tính năng bạn muốn làm. Công thức: khi ở tình huống nào, tôi muốn làm gì, để đạt được kết quả gì.' },
-      { so: 17, tieuDe: 'Hỏi hành vi, không hỏi ý kiến', noiDung: 'Câu hỏi kiểu bạn có cần tính năng này không thì gần như ai cũng trả lời có, và dữ liệu đó vô dụng. Phải hỏi về hành vi đã xảy ra: lần gần nhất bạn gặp việc này, bạn đã làm gì, mất bao lâu.' },
-      { so: 18, tieuDe: 'Một vai cụ thể', noiDung: 'Người dùng chung chung thì không thiết kế được cho ai cả. Phải khoanh về một vai trong một tình huống, ví dụ học viên đang làm bài lab lúc khuya, chứ không phải học viên nói chung.' }
-    ]},
-    { id: 'day2-3', ten: 'Bằng chứng và impact', phu: 'Chứng minh vấn đề tồn tại thật', trang: [
-      { so: 19, tieuDe: 'Ba tầng của một bằng chứng', noiDung: 'Một bằng chứng dùng được phải có ba tầng: con số cụ thể, ý nghĩa của con số đó với người dùng, và cách đếm để người khác chạy lại được. Thiếu tầng nào thì chưa tính là bằng chứng, chỉ là cảm nhận.' },
-      { so: 20, tieuDe: 'Hai đường lấy bằng chứng', noiDung: 'Đường thứ nhất là hỏi người thật, cần đủ số lượng để một hai ý kiến lệch không đổi được kết luận. Đường thứ hai là đếm trên dữ liệu, cần số đếm được kèm ví dụ nguyên văn và phương pháp kiểm lại được.' },
-      { so: 21, tieuDe: 'Tính impact', noiDung: 'Impact tính bằng số người bị ảnh hưởng nhân tần suất nhân chi phí mỗi lần. Nếu một trong ba số đó không ước lượng được thì bài toán chưa đủ rõ để làm.' }
-    ]}
-  ]},
-  { day: 'Day 03 đến Day 06: Xây và kiểm', items: [
-    { id: 'day3-1', ten: 'Viết AI Spec', phu: 'Tài liệu chốt trước khi build', trang: [
-      { so: 22, tieuDe: 'Spec gồm những gì', noiDung: 'AI Spec mô tả: người dùng và công việc, vấn đề và bằng chứng, lát cắt sẽ làm, mức tự động hóa, các tình huống lỗi, và tiêu chí kiểm thử. Spec là chỗ chốt, không phải chỗ mô tả mong muốn.' },
-      { so: 23, tieuDe: 'Lát cắt là một câu', noiDung: 'Lát cắt gồm bốn phần: một người dùng, một công việc, một quyết định AI, một kết quả. Nếu đọc xong không biết demo bấm vào đâu, gõ gì, ra gì thì lát cắt còn chưa đủ sắc.' },
-      { so: 24, tieuDe: 'Bốn lớp chỗ khó', noiDung: 'Với mỗi sản phẩm AI cần viết riêng bốn lớp: chỗ mô hình dễ sai, chỗ dữ liệu thiếu, chỗ người dùng dùng sai cách, và chỗ hệ thống hỏng. Chép lại định nghĩa chung mà không gắn vào sản phẩm của mình thì không tính.' }
-    ]},
-    { id: 'day3-2', ten: 'Kiểm thử và đánh giá', phu: 'Golden set, quality bar, bảng kết quả', trang: [
-      { so: 25, tieuDe: 'Golden set', noiDung: 'Golden set là bộ câu thử có đáp án biết trước, dùng để đo chất lượng hệ thống. Bộ này phải có cả câu dễ và câu khó, và phải có câu mà hệ thống đúng ra nên từ chối trả lời.' },
-      { so: 26, tieuDe: 'Benchmark riêng cho từng bài toán', noiDung: 'Không có bộ benchmark chung nào khớp đúng việc của bạn, nên mỗi bài toán thường phải tự dựng benchmark riêng. Điều quan trọng là bộ đó cố định, không sửa sau khi thấy kết quả.' },
-      { so: 27, tieuDe: 'Quality bar bằng con số', noiDung: 'Quality bar là ngưỡng đạt, viết bằng con số và chốt trước khi chạy. Ví dụ: đạt khi ít nhất 80 phần trăm câu trong bộ 20 câu trả lời đúng và có dẫn trang. Ghi kết quả trung thực 13 trên 21 vẫn được tính đủ, còn ghi 100 phần trăm mà bảng chỉ có 8 dòng thì không.' }
-    ]}
-  ]}
-];
+      const TAI_LIEU = [
+        {
+          day: "Day 01: Nền tảng",
+          items: [
+            {
+              id: "day1-1",
+              ten: "AI & LLM Foundation",
+              phu: "Mô hình ngôn ngữ lớn và kiến trúc Transformer",
+              trang: [
+                {
+                  so: 1,
+                  tieuDe: "Mô hình ngôn ngữ lớn là gì",
+                  noiDung:
+                    "Mô hình ngôn ngữ lớn, viết tắt là LLM, được huấn luyện trên một khối lượng văn bản rất lớn để làm đúng một việc: dự đoán token tiếp theo. Toàn bộ khả năng viết văn, trả lời câu hỏi hay viết code đều mọc ra từ việc dự đoán token lặp lại nhiều lần.",
+                },
+                {
+                  so: 2,
+                  tieuDe: "Token và cách tính chi phí",
+                  noiDung:
+                    "Token là đơn vị nhỏ hơn từ. Một từ tiếng Việt có thể bị tách thành hai đến ba token. Chi phí gọi API tính theo số token vào và số token ra, nên prompt càng dài thì càng tốn. Muốn giảm chi phí thì phải giảm ngữ cảnh gửi lên, không phải giảm số lần gọi.",
+                },
+                {
+                  so: 3,
+                  tieuDe: "Kiến trúc Transformer",
+                  noiDung:
+                    "Transformer là kiến trúc nền của gần như mọi LLM hiện nay. Điểm khác biệt so với các mô hình trước là nó không xử lý câu theo thứ tự từng từ một, mà nhìn toàn bộ câu cùng lúc rồi tự quyết định phần nào quan trọng.",
+                },
+                {
+                  so: 4,
+                  tieuDe: "Cơ chế attention",
+                  noiDung:
+                    'Attention cho phép mô hình chú ý đến các phần khác nhau của đầu vào với mức độ khác nhau. Với câu "con mèo ngồi trên bàn", khi xử lý từ "ngồi" thì mô hình chú ý mạnh vào "con mèo" và "bàn", vì đó là hai thứ quyết định nghĩa của hành động. Cơ chế này được tính bằng ba ma trận Q, K và V.',
+                },
+                {
+                  so: 5,
+                  tieuDe: "Multi-head attention",
+                  noiDung:
+                    "Thay vì chỉ có một cách chú ý, mô hình chạy nhiều head song song. Mỗi head học một kiểu quan hệ khác nhau: một head bắt quan hệ ngữ pháp, một head bắt quan hệ nghĩa, một head bắt vị trí. Kết quả các head được ghép lại rồi đưa qua lớp tiếp theo.",
+                },
+                {
+                  so: 6,
+                  tieuDe: "Temperature và top-p",
+                  noiDung:
+                    "Temperature điều khiển độ ngẫu nhiên khi chọn token. Để 0 thì mô hình luôn chọn token có xác suất cao nhất, trả lời ổn định nhưng khô. Để cao thì đa dạng hơn nhưng dễ bịa. Top-p thì giới hạn tập token được chọn theo tổng xác suất. Với bài toán cần chính xác, hãy để temperature thấp.",
+                },
+              ],
+            },
+            {
+              id: "day1-2",
+              ten: "Prompt Engineering cơ bản",
+              phu: "Bốn thành phần của một prompt tốt",
+              trang: [
+                {
+                  so: 7,
+                  tieuDe: "Bốn thành phần của prompt",
+                  noiDung:
+                    "Một prompt dùng được thường có bốn phần: Role là mô hình đang đóng vai ai, Context là ngữ cảnh và dữ liệu kèm theo, Task là việc cụ thể cần làm, Format là hình dạng đầu ra mong muốn. Thiếu Format là lỗi hay gặp nhất, vì khi đó đầu ra mỗi lần một kiểu và không ghép được vào code.",
+                },
+                {
+                  so: 8,
+                  tieuDe: "Vì sao cần chỉ định định dạng đầu ra",
+                  noiDung:
+                    "Nếu bạn cần đầu ra là JSON để hệ thống đọc, phải nói rõ trong prompt và mô tả từng trường. Không có schema nào để mô hình hay hệ thống kiểm tra tính hợp lệ trước khi gọi, nên chính prompt phải làm việc đó.",
+                },
+                {
+                  so: 9,
+                  tieuDe: "Tool calling",
+                  noiDung:
+                    "Tool calling cho phép mô hình gọi ra ngoài: tra cứu API, đọc cơ sở dữ liệu, tính toán. Mô hình không tự thực thi, nó chỉ trả về tên tool và tham số dưới dạng có cấu trúc, còn hệ thống của bạn mới là chỗ thực thi thật.",
+                },
+                {
+                  so: 10,
+                  tieuDe: "RAG và grounding",
+                  noiDung:
+                    "RAG là kỹ thuật tìm đoạn tài liệu liên quan rồi đưa vào prompt trước khi hỏi mô hình. Mục đích là buộc câu trả lời dựa trên tài liệu thật thay vì dựa vào ký ức của mô hình. Câu trả lời có dẫn nguồn được gọi là có grounding, và đây là cách chính để giảm bịa.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          day: "Day 02: Xác định bài toán",
+          items: [
+            {
+              id: "day2-1",
+              ten: "Xác định bài toán cho AI",
+              phu: "Từ yêu cầu mơ hồ đến vấn đề cụ thể",
+              trang: [
+                {
+                  so: 11,
+                  tieuDe: "Kỹ năng khó nhất",
+                  noiDung:
+                    "Kỹ năng thiếu nhất hiện nay không phải là code mô hình, mà là biến một yêu cầu mơ hồ thành một bài toán cụ thể có thể triển khai được trong thời gian ngắn. Rất nhiều công ty tuyển AI engineer nhưng không có ai đặt được đề bài, nên cuối cùng không ra kết quả.",
+                },
+                {
+                  so: 12,
+                  tieuDe: "Đừng nhảy thẳng vào giải pháp",
+                  noiDung:
+                    "Con người có quán tính nhảy thẳng vào giải pháp. Câu hỏi đúng phải là vấn đề là gì, rồi mới đến công nghệ nào giải nó. Yêu cầu kiểu làm một cái AI support cho công ty là chưa phải bài toán, vì chưa trả lời được support cho ai và để làm gì.",
+                },
+                {
+                  so: 13,
+                  tieuDe: "Double Diamond",
+                  noiDung:
+                    "Double Diamond gồm hai kim cương: kim cương thứ nhất để tìm đúng vấn đề, kim cương thứ hai để tìm đúng giải pháp. Mỗi kim cương có một pha phân kỳ để mở rộng lựa chọn và một pha hội tụ để chốt lại. Làm đúng một cái sai thì tệ hơn làm sai một cái đúng.",
+                },
+                {
+                  so: 14,
+                  tieuDe: "Ma trận tác động và nỗ lực",
+                  noiDung:
+                    "Vẽ hai trục: tác động và nỗ lực. Việc tác động cao mà nỗ lực thấp là quick win, làm trước. Tác động cao nỗ lực cao thì cần lên kế hoạch. Tác động thấp nỗ lực thấp thì làm khi rảnh. Tác động thấp nỗ lực cao thì bỏ. Ma trận này dùng để chốt việc, không phải để trang trí slide.",
+                },
+                {
+                  so: 15,
+                  tieuDe: "Mức tự động hóa",
+                  noiDung:
+                    "Không phải việc gì cũng nên để AI làm hết. Automation là AI làm thay hoàn toàn, augmentation là AI hỗ trợ con người quyết định. Chọn mức nào phụ thuộc vào hậu quả khi sai. Việc mà sai một lần là gây thiệt hại lớn thì phải để con người chốt.",
+                },
+              ],
+            },
+            {
+              id: "day2-2",
+              ten: "JTBD Framework",
+              phu: "Jobs to Be Done",
+              trang: [
+                {
+                  so: 16,
+                  tieuDe: "JTBD là gì",
+                  noiDung:
+                    "JTBD giúp nhìn người dùng theo công việc họ cần hoàn thành, thay vì theo tính năng bạn muốn làm. Công thức: khi ở tình huống nào, tôi muốn làm gì, để đạt được kết quả gì.",
+                },
+                {
+                  so: 17,
+                  tieuDe: "Hỏi hành vi, không hỏi ý kiến",
+                  noiDung:
+                    "Câu hỏi kiểu bạn có cần tính năng này không thì gần như ai cũng trả lời có, và dữ liệu đó vô dụng. Phải hỏi về hành vi đã xảy ra: lần gần nhất bạn gặp việc này, bạn đã làm gì, mất bao lâu.",
+                },
+                {
+                  so: 18,
+                  tieuDe: "Một vai cụ thể",
+                  noiDung:
+                    "Người dùng chung chung thì không thiết kế được cho ai cả. Phải khoanh về một vai trong một tình huống, ví dụ học viên đang làm bài lab lúc khuya, chứ không phải học viên nói chung.",
+                },
+              ],
+            },
+            {
+              id: "day2-3",
+              ten: "Bằng chứng và impact",
+              phu: "Chứng minh vấn đề tồn tại thật",
+              trang: [
+                {
+                  so: 19,
+                  tieuDe: "Ba tầng của một bằng chứng",
+                  noiDung:
+                    "Một bằng chứng dùng được phải có ba tầng: con số cụ thể, ý nghĩa của con số đó với người dùng, và cách đếm để người khác chạy lại được. Thiếu tầng nào thì chưa tính là bằng chứng, chỉ là cảm nhận.",
+                },
+                {
+                  so: 20,
+                  tieuDe: "Hai đường lấy bằng chứng",
+                  noiDung:
+                    "Đường thứ nhất là hỏi người thật, cần đủ số lượng để một hai ý kiến lệch không đổi được kết luận. Đường thứ hai là đếm trên dữ liệu, cần số đếm được kèm ví dụ nguyên văn và phương pháp kiểm lại được.",
+                },
+                {
+                  so: 21,
+                  tieuDe: "Tính impact",
+                  noiDung:
+                    "Impact tính bằng số người bị ảnh hưởng nhân tần suất nhân chi phí mỗi lần. Nếu một trong ba số đó không ước lượng được thì bài toán chưa đủ rõ để làm.",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          day: "Day 03 đến Day 06: Xây và kiểm",
+          items: [
+            {
+              id: "day3-1",
+              ten: "Viết AI Spec",
+              phu: "Tài liệu chốt trước khi build",
+              trang: [
+                {
+                  so: 22,
+                  tieuDe: "Spec gồm những gì",
+                  noiDung:
+                    "AI Spec mô tả: người dùng và công việc, vấn đề và bằng chứng, lát cắt sẽ làm, mức tự động hóa, các tình huống lỗi, và tiêu chí kiểm thử. Spec là chỗ chốt, không phải chỗ mô tả mong muốn.",
+                },
+                {
+                  so: 23,
+                  tieuDe: "Lát cắt là một câu",
+                  noiDung:
+                    "Lát cắt gồm bốn phần: một người dùng, một công việc, một quyết định AI, một kết quả. Nếu đọc xong không biết demo bấm vào đâu, gõ gì, ra gì thì lát cắt còn chưa đủ sắc.",
+                },
+                {
+                  so: 24,
+                  tieuDe: "Bốn lớp chỗ khó",
+                  noiDung:
+                    "Với mỗi sản phẩm AI cần viết riêng bốn lớp: chỗ mô hình dễ sai, chỗ dữ liệu thiếu, chỗ người dùng dùng sai cách, và chỗ hệ thống hỏng. Chép lại định nghĩa chung mà không gắn vào sản phẩm của mình thì không tính.",
+                },
+              ],
+            },
+            {
+              id: "day3-2",
+              ten: "Kiểm thử và đánh giá",
+              phu: "Golden set, quality bar, bảng kết quả",
+              trang: [
+                {
+                  so: 25,
+                  tieuDe: "Golden set",
+                  noiDung:
+                    "Golden set là bộ câu thử có đáp án biết trước, dùng để đo chất lượng hệ thống. Bộ này phải có cả câu dễ và câu khó, và phải có câu mà hệ thống đúng ra nên từ chối trả lời.",
+                },
+                {
+                  so: 26,
+                  tieuDe: "Benchmark riêng cho từng bài toán",
+                  noiDung:
+                    "Không có bộ benchmark chung nào khớp đúng việc của bạn, nên mỗi bài toán thường phải tự dựng benchmark riêng. Điều quan trọng là bộ đó cố định, không sửa sau khi thấy kết quả.",
+                },
+                {
+                  so: 27,
+                  tieuDe: "Quality bar bằng con số",
+                  noiDung:
+                    "Quality bar là ngưỡng đạt, viết bằng con số và chốt trước khi chạy. Ví dụ: đạt khi ít nhất 80 phần trăm câu trong bộ 20 câu trả lời đúng và có dẫn trang. Ghi kết quả trung thực 13 trên 21 vẫn được tính đủ, còn ghi 100 phần trăm mà bảng chỉ có 8 dòng thì không.",
+                },
+              ],
+            },
+          ],
+        },
+      ];
 
-/* =========================================================================
+      /* =========================================================================
    2. RANH GIỚI DUY NHẤT GIỮA GIAO DIỆN VÀ AI
    CP2: chạy mock bên dưới.
    CP3: chỉ thay ruột hàm này bằng lời gọi AI thật, KHÔNG sửa giao diện.
         traLoi(cauHoi, doanNguCanh, danhSachTrang) -> { nuocDi, cauTraLoi, soTrang }
         nuocDi thuộc: 'giang_lai' | 'cho_vi_du' | 'goi_mo' | 'chua_co_can_cu'
    ========================================================================= */
-async function traLoi(cauHoi, doanNguCanh, danhSachTrang) {
-  await doiMotChut(900);
-  return mockTraLoi(cauHoi, doanNguCanh, danhSachTrang);
+      async function traLoi(cauHoi, doanNguCanh, danhSachTrang) {
+        await doiMotChut(900);
+        return mockTraLoi(cauHoi, doanNguCanh, danhSachTrang);
 
-  /* CP3, bản thật, đại ý như sau:
+        /* CP3, bản thật, đại ý như sau:
   const res = await fetch('/api/tra-loi', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -402,1201 +997,476 @@ async function traLoi(cauHoi, doanNguCanh, danhSachTrang) {
   if (!res.ok) throw new Error('Gọi AI thất bại: ' + res.status);
   return await res.json(); // phải trả về { nuocDi, cauTraLoi, soTrang }
   */
-}
+      }
 
-/* =========================================================================
+      /* =========================================================================
    3. MOCK. Không gọi mạng. Đọc câu hỏi để chọn nước đi và tìm trang khớp.
    ========================================================================= */
-const TU_KHOA = {
-  cho_vi_du: ['vi du', 'minh hoa', 'lay vi du', 'cho toi xem'],
-  goi_mo: ['tai sao', 'vi sao', 'lam sao', 'lam the nao', 'khac nhau', 'so sanh', 'khac gi']
-};
-const TU_DUNG = new Set(['la','gi','the','nao','cho','toi','minh','cua','va','co','khong','mot','trong','ve','nay','do','ban','hay','duoc','thi','ma','nhu','voi','de','giai','thich','hoi','noi','cai','cac','nhung','ra','len','tren','khi','neu']);
+      const TU_KHOA = {
+        cho_vi_du: ["vi du", "minh hoa", "lay vi du", "cho toi xem"],
+        goi_mo: [
+          "tai sao",
+          "vi sao",
+          "lam sao",
+          "lam the nao",
+          "khac nhau",
+          "so sanh",
+          "khac gi",
+        ],
+      };
+      const TU_DUNG = new Set([
+        "la",
+        "gi",
+        "the",
+        "nao",
+        "cho",
+        "toi",
+        "minh",
+        "cua",
+        "va",
+        "co",
+        "khong",
+        "mot",
+        "trong",
+        "ve",
+        "nay",
+        "do",
+        "ban",
+        "hay",
+        "duoc",
+        "thi",
+        "ma",
+        "nhu",
+        "voi",
+        "de",
+        "giai",
+        "thich",
+        "hoi",
+        "noi",
+        "cai",
+        "cac",
+        "nhung",
+        "ra",
+        "len",
+        "tren",
+        "khi",
+        "neu",
+      ]);
 
-function boDau(s) {
-  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-          .replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
-}
-function tuChinh(s) {
-  return boDau(s).replace(/[^a-z0-9\s]/g, ' ').split(/\s+/)
-         .filter(w => w.length > 2 && !TU_DUNG.has(w));
-}
-function chonNuocDi(cauHoi) {
-  const q = boDau(cauHoi);
-  if (TU_KHOA.cho_vi_du.some(k => q.includes(k))) return 'cho_vi_du';
-  if (TU_KHOA.goi_mo.some(k => q.includes(k))) return 'goi_mo';
-  return 'giang_lai';
-}
-function timTrang(cauHoi, doanNguCanh, danhSachTrang) {
-  // Nếu học viên nói rõ số trang thì ưu tiên trang đó.
-  const mt = boDau(cauHoi).match(/trang\s*(\d+)/);
-  if (mt) {
-    const t = danhSachTrang.find(p => p.so === Number(mt[1]));
-    if (t) return t;
-  }
-  const tu = tuChinh(cauHoi + ' ' + (doanNguCanh || ''));
-  if (!tu.length) return null;
-  let tot = null, diemTot = 0;
-  for (const p of danhSachTrang) {
-    const tuTieuDe = new Set(tuChinh(p.tieuDe));
-    const tuNoiDung = new Set(tuChinh(p.noiDung));
-    let diem = 0;
-    for (const t of tu) {
-      // từ dài mang nhiều tín hiệu hơn từ ngắn thông dụng
-      if (tuTieuDe.has(t)) diem += t.length * 3;
-      else if (tuNoiDung.has(t)) diem += t.length;
-    }
-    if (diem > diemTot) { diemTot = diem; tot = p; }
-  }
-  return diemTot >= 9 ? tot : null;
-}
-function cauDauTien(text) {
-  const m = text.match(/^[^.]{20,200}\./);
-  return m ? m[0] : text.slice(0, 160);
-}
+      function boDau(s) {
+        return s
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/Đ/g, "D")
+          .toLowerCase();
+      }
+      function tuChinh(s) {
+        return boDau(s)
+          .replace(/[^a-z0-9\s]/g, " ")
+          .split(/\s+/)
+          .filter((w) => w.length > 2 && !TU_DUNG.has(w));
+      }
+      function chonNuocDi(cauHoi) {
+        const q = boDau(cauHoi);
+        if (TU_KHOA.cho_vi_du.some((k) => q.includes(k))) return "cho_vi_du";
+        if (TU_KHOA.goi_mo.some((k) => q.includes(k))) return "goi_mo";
+        return "giang_lai";
+      }
+      function timTrang(cauHoi, doanNguCanh, danhSachTrang) {
+        // Nếu học viên nói rõ số trang thì ưu tiên trang đó.
+        const mt = boDau(cauHoi).match(/trang\s*(\d+)/);
+        if (mt) {
+          const t = danhSachTrang.find((p) => p.so === Number(mt[1]));
+          if (t) return t;
+        }
+        const tu = tuChinh(cauHoi + " " + (doanNguCanh || ""));
+        if (!tu.length) return null;
+        let tot = null,
+          diemTot = 0;
+        for (const p of danhSachTrang) {
+          const tuTieuDe = new Set(tuChinh(p.tieuDe));
+          const tuNoiDung = new Set(tuChinh(p.noiDung));
+          let diem = 0;
+          for (const t of tu) {
+            // từ dài mang nhiều tín hiệu hơn từ ngắn thông dụng
+            if (tuTieuDe.has(t)) diem += t.length * 3;
+            else if (tuNoiDung.has(t)) diem += t.length;
+          }
+          if (diem > diemTot) {
+            diemTot = diem;
+            tot = p;
+          }
+        }
+        return diemTot >= 9 ? tot : null;
+      }
+      function cauDauTien(text) {
+        const m = text.match(/^[^.]{20,200}\./);
+        return m ? m[0] : text.slice(0, 160);
+      }
 
-function mockTraLoi(cauHoi, doanNguCanh, danhSachTrang) {
-  const trang = timTrang(cauHoi, doanNguCanh, danhSachTrang);
+      function mockTraLoi(cauHoi, doanNguCanh, danhSachTrang) {
+        const trang = timTrang(cauHoi, doanNguCanh, danhSachTrang);
 
-  // Luật ở dòng 6 của Canvas: không có căn cứ thì không đoán.
-  if (!trang) {
-    return {
-      nuocDi: 'chua_co_can_cu',
-      cauTraLoi: 'Mình chưa tìm được căn cứ cho câu hỏi này trong tài liệu đang mở, nên mình không trả lời để tránh nói sai.\n\nBạn thử hỏi lại bằng từ ngữ có trong tài liệu, mở đúng tài liệu chứa nội dung đó, hoặc hỏi giảng viên và TA.',
-      soTrang: null
-    };
-  }
+        // Luật ở dòng 6 của Canvas: không có căn cứ thì không đoán.
+        if (!trang) {
+          return {
+            nuocDi: "chua_co_can_cu",
+            cauTraLoi:
+              "Mình chưa tìm được căn cứ cho câu hỏi này trong tài liệu đang mở, nên mình không trả lời để tránh nói sai.\n\nBạn thử hỏi lại bằng từ ngữ có trong tài liệu, mở đúng tài liệu chứa nội dung đó, hoặc hỏi giảng viên và TA.",
+            soTrang: null,
+          };
+        }
 
-  const nuocDi = chonNuocDi(cauHoi);
-  const noiDung = trang.noiDung;
-  let cauTraLoi;
+        const nuocDi = chonNuocDi(cauHoi);
+        const noiDung = trang.noiDung;
+        let cauTraLoi;
 
-  if (nuocDi === 'cho_vi_du') {
-    cauTraLoi = 'Lấy đúng ví dụ trong tài liệu cho bạn:\n\n' + noiDung
-      + '\n\nBạn thử kể lại ví dụ này bằng lời của mình xem có khớp không.';
-  } else if (nuocDi === 'goi_mo') {
-    cauTraLoi = 'Trước khi mình giải thích, bạn thử trả lời trước đã: theo trang ' + trang.so
-      + ', "' + trang.tieuDe + '" thì ý chính nằm ở đâu?\n\nCăn cứ để bạn đọc lại:\n' + cauDauTien(noiDung)
-      + '\n\nTrả lời xong gửi lại, mình nói tiếp chỗ còn thiếu.';
-  } else {
-    cauTraLoi = noiDung + '\n\nĐó là phần tài liệu liên quan trực tiếp đến câu hỏi của bạn.';
-  }
-  return { nuocDi, cauTraLoi, soTrang: trang.so };
-}
+        if (nuocDi === "cho_vi_du") {
+          cauTraLoi =
+            "Lấy đúng ví dụ trong tài liệu cho bạn:\n\n" +
+            noiDung +
+            "\n\nBạn thử kể lại ví dụ này bằng lời của mình xem có khớp không.";
+        } else if (nuocDi === "goi_mo") {
+          cauTraLoi =
+            "Trước khi mình giải thích, bạn thử trả lời trước đã: theo trang " +
+            trang.so +
+            ', "' +
+            trang.tieuDe +
+            '" thì ý chính nằm ở đâu?\n\nCăn cứ để bạn đọc lại:\n' +
+            cauDauTien(noiDung) +
+            "\n\nTrả lời xong gửi lại, mình nói tiếp chỗ còn thiếu.";
+        } else {
+          cauTraLoi =
+            noiDung +
+            "\n\nĐó là phần tài liệu liên quan trực tiếp đến câu hỏi của bạn.";
+        }
+        return { nuocDi, cauTraLoi, soTrang: trang.so };
+      }
 
-/* =========================================================================
+      /* =========================================================================
    4. GIAO DIỆN
    ========================================================================= */
-const NHAN_NUOC_DI = {
-  giang_lai: 'GIẢNG LẠI',
-  cho_vi_du: 'CHO VÍ DỤ',
-  goi_mo: 'GỢI MỞ',
-  chua_co_can_cu: 'CHƯA CÓ CĂN CỨ'
-};
+      const NHAN_NUOC_DI = {
+        giang_lai: "GIẢNG LẠI",
+        cho_vi_du: "CHO VÍ DỤ",
+        goi_mo: "GỢI MỞ",
+        chua_co_can_cu: "CHƯA CÓ CĂN CỨ",
+      };
 
-let taiLieuHienTai = null;
-let chiSoTrang = 0;
-let doanDaChon = null;
-let daMo = new Set();
-const hoiThoai = {}; // theo id tài liệu
+      let taiLieuHienTai = null;
+      let chiSoTrang = 0;
+      let doanDaChon = null;
+      let daMo = new Set();
+      const hoiThoai = {}; // theo id tài liệu
 
-const el = id => document.getElementById(id);
-const doiMotChut = ms => new Promise(r => setTimeout(r, ms));
+      const el = (id) => document.getElementById(id);
+      const doiMotChut = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/* ---- Điều hướng ---- */
-function veTrangChu() {
-  el('home-screen').style.display = 'block';
-  el('main-layout').style.display = 'none';
-  el('header-title').style.display = 'none';
-  el('header-crumb').style.display = 'none';
-  el('mock-badge').style.display = 'none';
-  el('btn-home').style.display = 'none';
-  capNhatTienDo();
-}
-function batDauHoc() {
-  el('home-screen').style.display = 'none';
-  el('main-layout').style.display = 'flex';
-  el('header-title').style.display = 'block';
-  el('header-crumb').style.display = 'block';
-  el('mock-badge').style.display = 'inline-block';
-  el('btn-home').style.display = 'inline-block';
-  if (!taiLieuHienTai) chonTaiLieu(TAI_LIEU[0].items[0].id);
-  el('question-input').focus();
-}
+      /* ---- Điều hướng ---- */
+      function veTrangChu() {
+        el("home-screen").style.display = "block";
+        el("main-layout").style.display = "none";
+        el("header-title").style.display = "none";
+        el("header-crumb").style.display = "none";
+        el("mock-badge").style.display = "none";
+        el("btn-home").style.display = "none";
+        capNhatTienDo();
+      }
+      function batDauHoc() {
+        el("home-screen").style.display = "none";
+        el("main-layout").style.display = "flex";
+        el("header-title").style.display = "block";
+        el("header-crumb").style.display = "block";
+        el("mock-badge").style.display = "inline-block";
+        el("btn-home").style.display = "inline-block";
+        if (!taiLieuHienTai) chonTaiLieu(TAI_LIEU[0].items[0].id);
+        el("question-input").focus();
+      }
 
-/* ---- Cột trái ---- */
-function dungDanhSachTaiLieu() {
-  const wrap = el('material-list');
-  wrap.innerHTML = '';
-  TAI_LIEU.forEach((nhom, i) => {
-    const g = document.createElement('div');
-    g.className = 'day-group' + (i === 0 ? '' : ' closed');
+      /* ---- Cột trái ---- */
+      function dungDanhSachTaiLieu() {
+        const wrap = el("material-list");
+        wrap.innerHTML = "";
+        TAI_LIEU.forEach((nhom, i) => {
+          const g = document.createElement("div");
+          g.className = "day-group" + (i === 0 ? "" : " closed");
 
-    const hd = document.createElement('div');
-    hd.className = 'day-header';
-    hd.innerHTML = '<span class="caret">▼</span><span></span>';
-    hd.lastChild.textContent = nhom.day;
-    hd.onclick = () => g.classList.toggle('closed');
-    g.appendChild(hd);
+          const hd = document.createElement("div");
+          hd.className = "day-header";
+          hd.innerHTML = '<span class="caret">▼</span><span></span>';
+          hd.lastChild.textContent = nhom.day;
+          hd.onclick = () => g.classList.toggle("closed");
+          g.appendChild(hd);
 
-    nhom.items.forEach(item => {
-      const d = document.createElement('div');
-      d.className = 'material-item';
-      d.dataset.id = item.id;
-      const ten = document.createElement('span');
-      ten.textContent = item.ten;
-      const sotr = document.createElement('span');
-      sotr.className = 'pages-tag';
-      sotr.textContent = item.trang.length + ' trang';
-      d.append(ten, sotr);
-      d.onclick = () => chonTaiLieu(item.id);
-      g.appendChild(d);
-    });
-    wrap.appendChild(g);
-  });
-}
+          nhom.items.forEach((item) => {
+            const d = document.createElement("div");
+            d.className = "material-item";
+            d.dataset.id = item.id;
+            const ten = document.createElement("span");
+            ten.textContent = item.ten;
+            const sotr = document.createElement("span");
+            sotr.className = "pages-tag";
+            sotr.textContent = item.trang.length + " trang";
+            d.append(ten, sotr);
+            d.onclick = () => chonTaiLieu(item.id);
+            g.appendChild(d);
+          });
+          wrap.appendChild(g);
+        });
+      }
 
-function timTaiLieu(id) {
-  for (const nhom of TAI_LIEU) {
-    const t = nhom.items.find(x => x.id === id);
-    if (t) return t;
-  }
-  return null;
-}
+      function timTaiLieu(id) {
+        for (const nhom of TAI_LIEU) {
+          const t = nhom.items.find((x) => x.id === id);
+          if (t) return t;
+        }
+        return null;
+      }
 
-function chonTaiLieu(id) {
-  taiLieuHienTai = timTaiLieu(id);
-  chiSoTrang = 0;
-  daMo.add(id);
-  doanDaChon = null;
+      function chonTaiLieu(id) {
+        taiLieuHienTai = timTaiLieu(id);
+        chiSoTrang = 0;
+        daMo.add(id);
+        doanDaChon = null;
 
-  document.querySelectorAll('.material-item').forEach(x =>
-    x.classList.toggle('active', x.dataset.id === id));
-  // mở nhóm chứa tài liệu này
-  document.querySelectorAll('.material-item.active').forEach(x =>
-    x.closest('.day-group').classList.remove('closed'));
+        document
+          .querySelectorAll(".material-item")
+          .forEach((x) => x.classList.toggle("active", x.dataset.id === id));
+        // mở nhóm chứa tài liệu này
+        document
+          .querySelectorAll(".material-item.active")
+          .forEach((x) => x.closest(".day-group").classList.remove("closed"));
 
-  el('slide-title').textContent = taiLieuHienTai.ten;
-  el('slide-subtitle').textContent = taiLieuHienTai.phu;
-  veTrang();
-  veHoiThoai();
-  veDoanDaChon();
-}
+        el("slide-title").textContent = taiLieuHienTai.ten;
+        el("slide-subtitle").textContent = taiLieuHienTai.phu;
+        veTrang();
+        veHoiThoai();
+        veDoanDaChon();
+      }
 
-/* ---- Cột giữa ---- */
-function veTrang() {
-  const t = taiLieuHienTai.trang[chiSoTrang];
-  const body = el('slide-body');
-  body.innerHTML = '';
+      /* ---- Cột giữa ---- */
+      function veTrang() {
+        const t = taiLieuHienTai.trang[chiSoTrang];
+        const body = el("slide-body");
+        body.innerHTML = "";
 
-  const tag = document.createElement('div');
-  tag.className = 'page-no';
-  tag.textContent = 'TRANG ' + t.so;
+        const tag = document.createElement("div");
+        tag.className = "page-no";
+        tag.textContent = "TRANG " + t.so;
 
-  const h = document.createElement('div');
-  h.className = 'page-heading';
-  h.textContent = t.tieuDe;
+        const h = document.createElement("div");
+        h.className = "page-heading";
+        h.textContent = t.tieuDe;
 
-  const p = document.createElement('div');
-  p.className = 'page-text';
-  p.textContent = t.noiDung;
+        const p = document.createElement("div");
+        p.className = "page-text";
+        p.textContent = t.noiDung;
 
-  body.append(tag, h, p);
-  body.scrollTop = 0;
+        body.append(tag, h, p);
+        body.scrollTop = 0;
 
-  el('page-count').textContent = 'Trang ' + (chiSoTrang + 1) + ' / ' + taiLieuHienTai.trang.length;
-  el('btn-prev').disabled = chiSoTrang === 0;
-  el('btn-next').disabled = chiSoTrang === taiLieuHienTai.trang.length - 1;
-  el('header-crumb').innerHTML = '';
-  el('header-crumb').append(document.createTextNode(taiLieuHienTai.ten + ' · '));
-  const b = document.createElement('b');
-  b.textContent = 'Trang ' + t.so;
-  el('header-crumb').appendChild(b);
-}
+        el("page-count").textContent =
+          "Trang " + (chiSoTrang + 1) + " / " + taiLieuHienTai.trang.length;
+        el("btn-prev").disabled = chiSoTrang === 0;
+        el("btn-next").disabled =
+          chiSoTrang === taiLieuHienTai.trang.length - 1;
+        el("header-crumb").innerHTML = "";
+        el("header-crumb").append(
+          document.createTextNode(taiLieuHienTai.ten + " · "),
+        );
+        const b = document.createElement("b");
+        b.textContent = "Trang " + t.so;
+        el("header-crumb").appendChild(b);
+      }
 
-function doiTrang(buoc) {
-  const moi = chiSoTrang + buoc;
-  if (moi < 0 || moi >= taiLieuHienTai.trang.length) return;
-  chiSoTrang = moi;
-  veTrang();
-}
+      function doiTrang(buoc) {
+        const moi = chiSoTrang + buoc;
+        if (moi < 0 || moi >= taiLieuHienTai.trang.length) return;
+        chiSoTrang = moi;
+        veTrang();
+      }
 
-/* ---- Bôi đen để chọn đoạn ---- */
-document.addEventListener('mouseup', () => {
-  const sel = window.getSelection();
-  if (!sel || sel.isCollapsed) return;
-  const node = sel.anchorNode;
-  if (!node) return;
-  const trong = node.parentElement && node.parentElement.closest('.page-text');
-  if (!trong) return;
-  const text = sel.toString().trim();
-  if (text.length < 3) return;
-  doanDaChon = { text, so: taiLieuHienTai.trang[chiSoTrang].so };
-  veDoanDaChon();
-  el('question-input').focus();
-});
+      /* ---- Bôi đen để chọn đoạn ---- */
+      document.addEventListener("mouseup", () => {
+        const sel = window.getSelection();
+        if (!sel || sel.isCollapsed) return;
+        const node = sel.anchorNode;
+        if (!node) return;
+        const trong =
+          node.parentElement && node.parentElement.closest(".page-text");
+        if (!trong) return;
+        const text = sel.toString().trim();
+        if (text.length < 3) return;
+        doanDaChon = { text, so: taiLieuHienTai.trang[chiSoTrang].so };
+        veDoanDaChon();
+        el("question-input").focus();
+      });
 
-function veDoanDaChon() {
-  const box = el('highlight-box');
-  const txt = el('highlight-text');
-  const x = el('btn-x-highlight');
-  if (doanDaChon) {
-    box.classList.add('active');
-    txt.textContent = 'Trang ' + doanDaChon.so + ': "' + doanDaChon.text + '"';
-    x.style.display = 'block';
-  } else {
-    box.classList.remove('active');
-    txt.textContent = 'Chưa chọn đoạn nào. Bạn có thể hỏi thẳng, Tutor sẽ tìm trong tài liệu đang mở.';
-    x.style.display = 'none';
-  }
-}
-function boChonDoan() { doanDaChon = null; veDoanDaChon(); }
+      function veDoanDaChon() {
+        const box = el("highlight-box");
+        const txt = el("highlight-text");
+        const x = el("btn-x-highlight");
+        if (doanDaChon) {
+          box.classList.add("active");
+          txt.textContent =
+            "Trang " + doanDaChon.so + ': "' + doanDaChon.text + '"';
+          x.style.display = "block";
+        } else {
+          box.classList.remove("active");
+          txt.textContent =
+            "Chưa chọn đoạn nào. Bạn có thể hỏi thẳng, Tutor sẽ tìm trong tài liệu đang mở.";
+          x.style.display = "none";
+        }
+      }
+      function boChonDoan() {
+        doanDaChon = null;
+        veDoanDaChon();
+      }
 
-/* ---- Cột phải: hội thoại ---- */
-function veHoiThoai() {
-  const box = el('chat-history');
-  box.innerHTML = '';
-  const ds = hoiThoai[taiLieuHienTai.id] || [];
-  if (!ds.length) {
-    const e = document.createElement('div');
-    e.className = 'chat-empty';
-    e.textContent = 'Chưa có câu hỏi nào cho tài liệu này. Bôi đen một đoạn ở giữa, hoặc gõ thẳng câu hỏi bên dưới.';
-    box.appendChild(e);
-    return;
-  }
-  ds.forEach(m => box.appendChild(veTinNhan(m)));
-  box.scrollTop = box.scrollHeight;
-}
+      /* ---- Cột phải: hội thoại ---- */
+      function veHoiThoai() {
+        const box = el("chat-history");
+        box.innerHTML = "";
+        const ds = hoiThoai[taiLieuHienTai.id] || [];
+        if (!ds.length) {
+          const e = document.createElement("div");
+          e.className = "chat-empty";
+          e.textContent =
+            "Chưa có câu hỏi nào cho tài liệu này. Bôi đen một đoạn ở giữa, hoặc gõ thẳng câu hỏi bên dưới.";
+          box.appendChild(e);
+          return;
+        }
+        ds.forEach((m) => box.appendChild(veTinNhan(m)));
+        box.scrollTop = box.scrollHeight;
+      }
 
-function veTinNhan(m) {
-  const d = document.createElement('div');
-  d.className = 'msg ' + (m.vai === 'student' ? 'msg-student' : 'msg-tutor');
+      function veTinNhan(m) {
+        const d = document.createElement("div");
+        d.className =
+          "msg " + (m.vai === "student" ? "msg-student" : "msg-tutor");
 
-  const lb = document.createElement('div');
-  lb.className = 'msg-label';
-  lb.textContent = m.vai === 'student' ? 'BẠN' : 'TUTOR';
-  d.appendChild(lb);
+        const lb = document.createElement("div");
+        lb.className = "msg-label";
+        lb.textContent = m.vai === "student" ? "BẠN" : "TUTOR";
+        d.appendChild(lb);
 
-  const ct = document.createElement('div');
-  ct.className = 'msg-content';
+        const ct = document.createElement("div");
+        ct.className = "msg-content";
 
-  if (m.vai === 'student') {
-    if (m.quote) {
-      const q = document.createElement('div');
-      q.className = 'msg-quote';
-      q.textContent = 'Trang ' + m.quote.so + ': "' + m.quote.text + '"';
-      ct.appendChild(q);
-    }
-    ct.appendChild(document.createTextNode(m.text));
-  } else {
-    const row = document.createElement('div');
-    row.className = 'move-row';
-    const tag = document.createElement('span');
-    tag.className = 'tag' + (m.nuocDi === 'chua_co_can_cu' ? ' warn' : '');
-    tag.textContent = NHAN_NUOC_DI[m.nuocDi] || m.nuocDi;
-    row.appendChild(tag);
-    const pg = document.createElement('span');
-    pg.className = 'tag page';
-    pg.textContent = m.soTrang ? ('Trang ' + m.soTrang) : 'Không có trang';
-    row.appendChild(pg);
-    ct.appendChild(row);
-    ct.appendChild(document.createTextNode(m.text));
-  }
-  d.appendChild(ct);
-  return d;
-}
+        if (m.vai === "student") {
+          if (m.quote) {
+            const q = document.createElement("div");
+            q.className = "msg-quote";
+            q.textContent = "Trang " + m.quote.so + ': "' + m.quote.text + '"';
+            ct.appendChild(q);
+          }
+          ct.appendChild(document.createTextNode(m.text));
+        } else {
+          const row = document.createElement("div");
+          row.className = "move-row";
+          const tag = document.createElement("span");
+          tag.className =
+            "tag" + (m.nuocDi === "chua_co_can_cu" ? " warn" : "");
+          tag.textContent = NHAN_NUOC_DI[m.nuocDi] || m.nuocDi;
+          row.appendChild(tag);
+          const pg = document.createElement("span");
+          pg.className = "tag page";
+          pg.textContent = m.soTrang ? "Trang " + m.soTrang : "Không có trang";
+          row.appendChild(pg);
+          ct.appendChild(row);
+          ct.appendChild(document.createTextNode(m.text));
+        }
+        d.appendChild(ct);
+        return d;
+      }
 
-async function guiCauHoi() {
-  const input = el('question-input');
-  const cauHoi = input.value.trim();
-  if (!cauHoi) { input.focus(); return; }
+      async function guiCauHoi() {
+        const input = el("question-input");
+        const cauHoi = input.value.trim();
+        if (!cauHoi) {
+          input.focus();
+          return;
+        }
 
-  const id = taiLieuHienTai.id;
-  if (!hoiThoai[id]) hoiThoai[id] = [];
+        const id = taiLieuHienTai.id;
+        if (!hoiThoai[id]) hoiThoai[id] = [];
 
-  hoiThoai[id].push({ vai: 'student', text: cauHoi, quote: doanDaChon });
-  const quoteDaDung = doanDaChon;
-  input.value = '';
-  boChonDoan();
-  veHoiThoai();
+        hoiThoai[id].push({ vai: "student", text: cauHoi, quote: doanDaChon });
+        const quoteDaDung = doanDaChon;
+        input.value = "";
+        boChonDoan();
+        veHoiThoai();
 
-  // trạng thái đang gõ
-  el('btn-send').disabled = true;
-  const box = el('chat-history');
-  const wait = document.createElement('div');
-  wait.className = 'msg msg-tutor';
-  wait.innerHTML = '<div class="msg-label">TUTOR</div><div class="msg-content"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
-  box.appendChild(wait);
-  box.scrollTop = box.scrollHeight;
+        // trạng thái đang gõ
+        el("btn-send").disabled = true;
+        const box = el("chat-history");
+        const wait = document.createElement("div");
+        wait.className = "msg msg-tutor";
+        wait.innerHTML =
+          '<div class="msg-label">TUTOR</div><div class="msg-content"><div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
+        box.appendChild(wait);
+        box.scrollTop = box.scrollHeight;
 
-  let kq;
-  try {
-    kq = await traLoi(cauHoi, quoteDaDung ? quoteDaDung.text : '', taiLieuHienTai.trang);
-  } catch (e) {
-    kq = { nuocDi: 'chua_co_can_cu', cauTraLoi: 'Không gọi được phần trả lời: ' + e.message + '. Bạn thử gửi lại.', soTrang: null };
-  }
+        let kq;
+        try {
+          kq = await traLoi(
+            cauHoi,
+            quoteDaDung ? quoteDaDung.text : "",
+            taiLieuHienTai.trang,
+          );
+        } catch (e) {
+          kq = {
+            nuocDi: "chua_co_can_cu",
+            cauTraLoi:
+              "Không gọi được phần trả lời: " +
+              e.message +
+              ". Bạn thử gửi lại.",
+            soTrang: null,
+          };
+        }
 
-  wait.remove();
-  el('btn-send').disabled = false;
-  hoiThoai[id].push({ vai: 'tutor', text: kq.cauTraLoi, nuocDi: kq.nuocDi, soTrang: kq.soTrang });
-  veHoiThoai();
-  input.focus();
-}
+        wait.remove();
+        el("btn-send").disabled = false;
+        hoiThoai[id].push({
+          vai: "tutor",
+          text: kq.cauTraLoi,
+          nuocDi: kq.nuocDi,
+          soTrang: kq.soTrang,
+        });
+        veHoiThoai();
+        input.focus();
+      }
 
-function xoaHoiThoai() {
-  if (!taiLieuHienTai) return;
-  hoiThoai[taiLieuHienTai.id] = [];
-  veHoiThoai();
-}
+      function xoaHoiThoai() {
+        if (!taiLieuHienTai) return;
+        hoiThoai[taiLieuHienTai.id] = [];
+        veHoiThoai();
+      }
 
-/* ---- Tiến độ ---- */
-function capNhatTienDo() {
-  const tong = TAI_LIEU.reduce((n, g) => n + g.items.length, 0);
-  const xong = daMo.size;
-  el('progress-text').textContent = xong + ' / ' + tong + ' tài liệu';
-  el('progress-fill').style.width = (tong ? Math.round(xong / tong * 100) : 0) + '%';
-}
+      /* ---- Tiến độ ---- */
+      function capNhatTienDo() {
+        const tong = TAI_LIEU.reduce((n, g) => n + g.items.length, 0);
+        const xong = daMo.size;
+        el("progress-text").textContent = xong + " / " + tong + " tài liệu";
+        el("progress-fill").style.width =
+          (tong ? Math.round((xong / tong) * 100) : 0) + "%";
+      }
 
-/* ---- Khởi động ---- */
-window.onload = function () {
-  dungDanhSachTaiLieu();
-  veTrangChu();
-  el('question-input').addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') guiCauHoi();
-  });
-  document.addEventListener('keydown', e => {
-    if (el('main-layout').style.display === 'none') return;
-    if (document.activeElement === el('question-input')) return;
-    if (e.key === 'ArrowLeft') doiTrang(-1);
-    if (e.key === 'ArrowRight') doiTrang(1);
-  });
-};
-</script>
-=======
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VLearn — AI & LLM Foundation</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f5;
-            height: 100vh;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            height: 60px;
-        }
-        
-        .logo {
-            font-weight: 700;
-            color: #1a5f3c;
-            font-size: 16px;
-        }
-        
-        .course-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .main-layout {
-            display: flex;
-            height: calc(100vh - 60px);
-            gap: 0;
-        }
-        
-        /* Sidebar Left */
-        .sidebar-left {
-            width: 280px;
-            background: white;
-            border-right: 1px solid #e0e0e0;
-            overflow-y: auto;
-            padding: 0;
-        }
-        
-        .sidebar-title {
-            padding: 15px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-            text-transform: uppercase;
-            background: #f9f9f9;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .day-group {
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .day-header {
-            padding: 10px 15px;
-            font-weight: 600;
-            font-size: 13px;
-            color: #1a5f3c;
-            background: #f9f9f9;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .day-header:hover {
-            background: #f0f8f5;
-        }
-        
-        .material-item {
-            padding: 10px 15px;
-            font-size: 13px;
-            color: #555;
-            cursor: pointer;
-            border-left: 3px solid transparent;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .material-item:hover {
-            background: #f5f5f5;
-            color: #1a5f3c;
-        }
-        
-        .material-item.active {
-            background: #eef8f5;
-            border-left-color: #1a5f3c;
-            color: #1a5f3c;
-            font-weight: 600;
-        }
-        
-        .material-icon {
-            font-size: 12px;
-        }
-        
-        /* Center Content */
-        .content-area {
-            flex: 1;
-            background: white;
-            border-right: 1px solid #e0e0e0;
-            overflow-y: auto;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .slide-display {
-            text-align: center;
-            max-width: 600px;
-        }
-        
-        .slide-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a5f3c;
-            margin-bottom: 10px;
-        }
-        
-        .slide-subtitle {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 30px;
-        }
-        
-        .slide-content-box {
-            background: linear-gradient(135deg, #d4e8e1 0%, #c5dfd6 100%);
-            padding: 40px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .slide-content {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-            text-align: left;
-        }
-        
-        .slide-footer {
-            font-size: 12px;
-            color: #666;
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        /* Sidebar Right - Tutor */
-        .sidebar-right {
-            width: 350px;
-            background: white;
-            border-left: 1px solid #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .tutor-header {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-            background: #f9f9f9;
-        }
-        
-        .tutor-title {
-            font-weight: 600;
-            font-size: 13px;
-            color: #1a5f3c;
-            margin-bottom: 4px;
-        }
-        
-        .tutor-subtitle {
-            font-size: 11px;
-            color: #999;
-        }
-        
-        .chat-history {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            scroll-behavior: smooth;
-            background: white;
-        }
-        
-        .chat-history::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .chat-history::-webkit-scrollbar-track {
-            background: #f9f9f9;
-        }
-        
-        .chat-history::-webkit-scrollbar-thumb {
-            background: #ddd;
-            border-radius: 3px;
-        }
-        
-        .chat-history::-webkit-scrollbar-thumb:hover {
-            background: #999;
-        }
-        
-        .chat-message {
-            margin-bottom: 12px;
-            animation: messageSlide 0.3s ease-out;
-        }
-        
-        @keyframes messageSlide {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .message-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: #999;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-        
-        .message-content {
-            font-size: 12px;
-            line-height: 1.5;
-            padding: 10px 12px;
-            border-radius: 6px;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
-        
-        .message-student {
-            text-align: right;
-        }
-        
-        .message-student .message-content {
-            background: #e3f2fd;
-            color: #1565c0;
-            display: inline-block;
-            max-width: 85%;
-            text-align: left;
-        }
-        
-        .message-tutor .message-content {
-            background: #f0f8f5;
-            color: #1a5f3c;
-            border-left: 3px solid #1a5f3c;
-        }
-        
-        .message-tutor.loading .message-content {
-            background: #f0f8f5;
-            color: #1a5f3c;
-            font-style: italic;
-        }
-        
-        .message-citations {
-            font-size: 10px;
-            color: #666;
-            margin-top: 4px;
-            padding-top: 4px;
-            border-top: 1px solid #e0e0e0;
-        }
-        
-        /* Typing indicator animation */
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-        }
-        
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #1a5f3c;
-            animation: typingBounce 1.4s infinite;
-        }
-        
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        
-        @keyframes typingBounce {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            30% {
-                transform: translateY(-8px);
-                opacity: 1;
-            }
-        }
-        
-        .tutor-input-area {
-            padding: 15px;
-            border-top: 1px solid #e0e0e0;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .input-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #666;
-            display: block;
-        }
-        
-        .highlight-box {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 12px;
-            color: #333;
-            max-height: 60px;
-            overflow-y: auto;
-            min-height: 32px;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-        
-        .highlight-box.active {
-            background: #fff9e6;
-            border-color: #ffb300;
-        }
-        
-        textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 12px;
-            font-family: inherit;
-            resize: vertical;
-            min-height: 60px;
-            max-height: 100px;
-            transition: all 0.2s ease;
-            background: white;
-        }
-        
-        textarea:focus {
-            outline: none;
-            border-color: #1a5f3c;
-            box-shadow: 0 0 0 2px rgba(26, 95, 60, 0.1);
-            background: white;
-        }
-        
-        textarea::placeholder {
-            color: #aaa;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 0;
-        }
-        
-        button {
-            flex: 1;
-            padding: 10px 12px;
-            border: none;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-send {
-            background: linear-gradient(135deg, #1a5f3c 0%, #0d3d24 100%);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        
-        .btn-send:hover {
-            background: linear-gradient(135deg, #0d3d24 0%, #051f12 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(26, 95, 60, 0.3);
-        }
-        
-        .btn-send:active {
-            transform: translateY(0);
-        }
-        
-        .btn-highlight {
-            background: #f0f0f0;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-        
-        .btn-highlight:hover {
-            background: #e8e8e8;
-            border-color: #999;
-        }
-        
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #c1c1c1;
-            border-radius: 3px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #888;
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <div class="header">
-        <div class="logo" onclick="goHome()" style="cursor: pointer;">🎓 VLearn</div>
-        <div class="course-title" id="header-title" style="display: none;">COMP2010 - Khoá 3 + 4 Phase 1</div>
-    </div>
-    
-    <!-- Home Screen -->
-    <div id="home-screen" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100vh - 60px); background: linear-gradient(135deg, #f5f5f5 0%, #e8f4f0 100%); padding: 40px;">
-        <div style="text-align: center; max-width: 600px;">
-            <h1 style="font-size: 48px; color: #1a5f3c; margin-bottom: 20px; font-weight: 700;">Welcome to VLearn</h1>
-            <p style="font-size: 18px; color: #666; margin-bottom: 40px; line-height: 1.6;">
-                Nền tảng học tập thích ứng với AI Tutor để giúp bạn hiểu bài tốt hơn
-            </p>
-            
-            <div style="background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); margin-bottom: 30px;">
-                <h2 style="font-size: 20px; color: #1a5f3c; margin-bottom: 20px;">📚 Khóa học của bạn</h2>
-                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">
-                    <strong>COMP2010 - Khoá 3 + 4 Phase 1</strong><br>
-                    AI & LLM thực chiến · 6 ngày
-                </p>
-                <p style="font-size: 13px; color: #999; margin-bottom: 25px;">
-                    1.074 học viên · Đã hoàn thành: 0/6 ngày
-                </p>
-                <button onclick="startCourse()" style="background: #1a5f3c; color: white; border: none; padding: 14px 40px; border-radius: 6px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
-                    🚀 Bắt đầu học
-                </button>
-            </div>
-            
-            <div style="text-align: left; background: #f0f8f5; border-left: 4px solid #1a5f3c; padding: 20px; border-radius: 6px; font-size: 13px; color: #333;">
-                <strong style="color: #1a5f3c;">💡 Cách sử dụng:</strong>
-                <ol style="margin: 10px 0 0 20px; padding: 0;">
-                    <li>Chọn bài giảng từ sidebar trái</li>
-                    <li>Bôi đen đoạn text bạn muốn hỏi</li>
-                    <li>Nhập câu hỏi → Gửi cho tutor</li>
-                    <li>Nhận phản hồi kèm citations</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Main Layout -->
-    <div class="main-layout" id="main-layout" style="display: none;">
-        <!-- Sidebar Left: Materials -->
-        <div class="sidebar-left">
-            <div class="sidebar-title">📚 Tài liệu học tập</div>
-            
-            <div class="day-group">
-                <div class="day-header" onclick="toggleDay(1)">Day 01: Foundation</div>
-                <div class="material-item active" onclick="selectMaterial('day1-1', this)">
-                    <span class="material-icon">📄</span>
-                    <span>AI & LLM Foundation</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial('day1-2', this)">
-                    <span class="material-icon">📄</span>
-                    <span>Prompt Engineering Basics</span>
-                </div>
-            </div>
-            
-            <div class="day-group">
-                <div class="day-header" onclick="toggleDay(2)">Day 02: Problem Definition</div>
-                <div class="material-item" onclick="selectMaterial('day2-1', this)">
-                    <span class="material-icon">📄</span>
-                    <span>Xác định bài toán cho AI</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial('day2-2', this)">
-                    <span class="material-icon">📄</span>
-                    <span>JTBD Framework</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial('day2-3', this)">
-                    <span class="material-icon">📄</span>
-                    <span>Evidence & Impact</span>
-                </div>
-            </div>
-            
-            <div class="day-group">
-                <div class="day-header" onclick="toggleDay(3)">Day 03 - Day 06: Build & Deploy</div>
-                <div class="material-item" onclick="selectMaterial('day3-1', this)">
-                    <span class="material-icon">📄</span>
-                    <span>Writing AI Spec</span>
-                </div>
-                <div class="material-item" onclick="selectMaterial('day3-2', this)">
-                    <span class="material-icon">📄</span>
-                    <span>Testing & Evaluation</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Center: Content Display -->
-        <div class="content-area">
-            <div class="slide-display" id="slide-display">
-                <div class="slide-title">AI & LLM Foundation</div>
-                <div class="slide-subtitle">Large Language Models & Prompt Engineering</div>
-                <div class="slide-content-box">
-                    <div class="slide-content" id="slide-content">
-                        Large Language Models (LLM) là các mô hình học tập được huấn luyện trên một lượng lớn dữ liệu văn bản, cho phép chúng dự đoán token tiếp theo với xác suất cao. Các LLM hiện đại sử dụng kiến trúc Transformer với cơ chế attention giúp mô hình tập trung vào các phần quan trọng của input.
-                    </div>
-                </div>
-                <div class="slide-footer">Slide Day 01</div>
-            </div>
-        </div>
-        
-        <!-- Sidebar Right: Tutor -->
-        <div class="sidebar-right">
-            <div class="tutor-header">
-                <div class="tutor-title">🤖 VLearn Tutor</div>
-                <div class="tutor-subtitle">Hỏi & học theo slide</div>
-            </div>
-            
-            <div class="chat-history" id="chat-history">
-                <!-- Messages will be loaded here -->
-            </div>
-            
-            <div class="tutor-input-area">
-                <label class="input-label">Bôi đen đoạn text ở trên, sau đó hỏi:</label>
-                <div class="highlight-box" id="highlight-display">
-                    Chưa chọn đoạn văn
-                </div>
-                <textarea id="question-input" placeholder="VD: Tại sao Transformer lại quan trọng?" rows="3"></textarea>
-                <div class="button-group">
-                    <button class="btn-highlight" onclick="selectHighlight()">📌 Bôi đen</button>
-                    <button class="btn-send" onclick="sendQuestion()">Gửi</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    
-    <script>
-        // Real chat data from the dataset
-        const chatData = {
-            'day1-1': [
-                {
-                    student: '(Trang 12, đoạn được chọn: "cơ chế attention")\ncơ chế attention là gì?',
-                    tutor: 'Attention là một cơ chế cho phép mô hình Transformer "chú ý" đến các phần khác nhau của input một cách khác nhau. Thay vì xử lý từng token tuần tự, attention cho phép mô hình so sánh mối quan hệ giữa tất cả các token cùng lúc.',
-                    citations: '[12] Transformer với cơ chế attention'
-                },
-                {
-                    student: '(Trang 45, đoạn được chọn: "4 chiến lược tối ưu")\nGiải thích 4 chiến lược tối ưu ngữ cảnh?',
-                    tutor: 'Có 4 chiến lược chính:\n\n1. Write: Chuyển đổi trạng thái ra ngoài ngữ cảnh chính\n2. Select: Chỉ chọn lọc thông tin thực sự liên quan\n3. Compress: Tóm tắt lịch sử hội thoại\n4. Isolate: Tách biệt ngữ cảnh cho các tác vụ phụ',
-                    citations: '[45] 4 chiến lược tối ưu prompt'
-                }
-            ],
-            'day1-2': [
-                {
-                    student: '(Trang 3, đoạn được chọn: "tool calling")\ntool calling là gì?',
-                    tutor: 'Tool calling là kỹ thuật cho phép LLM tương tác với các công cụ bên ngoài (API, database, tính toán). Thay vì chỉ trả về văn bản, mô hình sẽ xác định công cụ cần thiết và trả về cấu trúc JSON để hệ thống thực thi.',
-                    citations: '[3, 96] Tool calling trong Prompt Engineering'
-                }
-            ],
-            'day2-1': [
-                {
-                    student: '(Trang 50, đoạn được chọn: "định nghĩa bài toán")\nLàm sao để định nghĩa bài toán AI đúng cách?',
-                    tutor: 'Định nghĩa bài toán AI cần có: (1) User cụ thể, (2) Job/tác vụ họ đang làm, (3) Pain point rõ ràng, (4) Bằng chứng về pain, (5) Impact mong muốn.',
-                    citations: '[50] Cách định nghĩa bài toán cho AI'
-                }
-            ],
-            'day2-2': [
-                {
-                    student: '(Trang 25, đoạn được chọn: "JTBD")\nJTBD framework là gì?',
-                    tutor: 'JTBD (Jobs to Be Done) là framework hiểu người dùng thực sự cần gì, thay vì chỉ nói về features. Nó trả lời: Khi [tình huống], người dùng muốn [cách hành động], để [kết quả mong muốn].',
-                    citations: '[25] JTBD Framework'
-                }
-            ]
-        };
-        
-        function goHome() {
-            document.getElementById('home-screen').style.display = 'flex';
-            document.getElementById('main-layout').style.display = 'none';
-            document.getElementById('header-title').style.display = 'none';
-        }
-        
-        function startCourse() {
-            document.getElementById('home-screen').style.display = 'none';
-            document.getElementById('main-layout').style.display = 'flex';
-            document.getElementById('header-title').style.display = 'block';
-            
-            // Load default material
-            loadSlideContent('day1-1');
-            loadChatHistory('day1-1');
-        }
-        
-        function selectMaterial(materialId, element) {
-            // Update active state
-            document.querySelectorAll('.material-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            
-            // Load slide content and chat
-            loadSlideContent(materialId);
-            loadChatHistory(materialId);
-        }
-        
-        function loadSlideContent(materialId) {
-            const contents = {
-                'day1-1': {
-                    title: 'AI & LLM Foundation',
-                    subtitle: 'Large Language Models & Prompt Engineering',
-                    content: 'Large Language Models (LLM) là các mô hình học tập được huấn luyện trên một lượng lớn dữ liệu văn bản, cho phép chúng dự đoán token tiếp theo với xác suất cao. Các LLM hiện đại sử dụng kiến trúc Transformer với cơ chế attention giúp mô hình tập trung vào các phần quan trọng của input.'
-                },
-                'day1-2': {
-                    title: 'Prompt Engineering Basics',
-                    subtitle: 'Kỹ thuật viết prompt hiệu quả',
-                    content: 'Prompt Engineering là kỹ thuật viết câu lệnh (prompt) để hướng dẫn LLM thực hiện tác vụ cụ thể. Một prompt tốt cần rõ ràng, cung cấp ngữ cảnh, và chỉ định format output mong muốn.'
-                },
-                'day2-1': {
-                    title: 'Xác định bài toán cho AI',
-                    subtitle: 'Problem Definition & Discovery',
-                    content: 'Xác định bài toán cho AI là bước đầu tiên và quan trọng nhất. Cần tìm được: User cụ thể → Job họ đang làm → Pain point → Bằng chứng → Giải pháp AI phù hợp.'
-                },
-                'day2-2': {
-                    title: 'JTBD Framework',
-                    subtitle: 'Jobs to Be Done',
-                    content: 'JTBD giúp hiểu người dùng từ góc nhìn công việc họ cần hoàn thành. Công thức: When [situation], I want to [action], so I can [outcome].'
-                },
-                'day2-3': {
-                    title: 'Evidence & Impact',
-                    subtitle: 'Chứng minh bằng dữ liệu',
-                    content: 'Để chứng minh pain point, cần: (1) Mining data thật, (2) Khảo sát user, (3) Ghi log đầy đủ. Impact được tính: bao nhiêu người × tần suất × tốn gì.'
-                },
-                'day3-1': {
-                    title: 'Writing AI Spec',
-                    subtitle: 'Viết AI Specification',
-                    content: 'AI Spec là tài liệu chi tiết mô tả: User & Job, Problem & Evidence, Slice (lát cắt), Automation level, Error scenarios, Testing criteria.'
-                },
-                'day3-2': {
-                    title: 'Testing & Evaluation',
-                    subtitle: 'Golden set, quality bar, evaluation',
-                    content: 'Testing AI cần: Golden set ≥20 cases, định nghĩa chất lượng kiểm chứng được, quality bar bằng %, bảng kết quả có % đạt.'
-                }
-            };
-            
-            const data = contents[materialId] || contents['day1-1'];
-            document.querySelector('.slide-title').textContent = data.title;
-            document.querySelector('.slide-subtitle').textContent = data.subtitle;
-            document.getElementById('slide-content').textContent = data.content;
-        }
-        
-        function loadChatHistory(materialId) {
-            const messages = chatData[materialId] || chatData['day1-1'];
-            const chatContainer = document.getElementById('chat-history');
-            chatContainer.innerHTML = '';
-            
-            messages.forEach((msg, index) => {
-                const studentDiv = document.createElement('div');
-                studentDiv.className = 'chat-message message-student';
-                studentDiv.style.animationDelay = `${index * 0.1}s`;
-                studentDiv.innerHTML = `
-                    <div class="message-label">Học viên</div>
-                    <div class="message-content">${msg.student}</div>
-                `;
-                chatContainer.appendChild(studentDiv);
-                
-                const tutorDiv = document.createElement('div');
-                tutorDiv.className = 'chat-message message-tutor';
-                tutorDiv.style.animationDelay = `${index * 0.1 + 0.05}s`;
-                tutorDiv.innerHTML = `
-                    <div class="message-label">Tutor</div>
-                    <div class="message-content">${msg.tutor}</div>
-                    <div class="message-citations">📚 ${msg.citations}</div>
-                `;
-                chatContainer.appendChild(tutorDiv);
-            });
-            
-            // Scroll to bottom smoothly
-            setTimeout(() => {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 100);
-        }
-        
-        function selectHighlight() {
-            const selected = window.getSelection().toString().trim();
-            if (selected) {
-                const highlightBox = document.getElementById('highlight-display');
-                highlightBox.textContent = `📌 "${selected}"`;
-                highlightBox.classList.add('active');
-            } else {
-                alert('Vui lòng bôi đen đoạn text cần hỏi');
-            }
-        }
-        
-        function sendQuestion() {
-            const question = document.getElementById('question-input').value.trim();
-            const highlightText = document.getElementById('highlight-display').textContent;
-            
-            if (!question) {
-                alert('Vui lòng nhập câu hỏi');
-                return;
-            }
-            
-            const chatContainer = document.getElementById('chat-history');
-            
-            // Add student message
-            const studentDiv = document.createElement('div');
-            studentDiv.className = 'chat-message message-student';
-            studentDiv.innerHTML = `
-                <div class="message-label">Bạn</div>
-                <div class="message-content">${highlightText}\n${question}</div>
-            `;
-            chatContainer.appendChild(studentDiv);
-            
-            // Auto scroll to bottom
-            setTimeout(() => {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 50);
-            
-            // Clear input
-            document.getElementById('question-input').value = '';
-            document.getElementById('highlight-display').textContent = 'Chưa chọn đoạn văn';
-            document.getElementById('highlight-display').classList.remove('active');
-            
-            // Add loading indicator
-            const loadingDiv = document.createElement('div');
-            loadingDiv.className = 'chat-message message-tutor loading';
-            loadingDiv.id = 'tutor-loading';
-            loadingDiv.innerHTML = `
-                <div class="message-label">Tutor</div>
-                <div class="message-content">
-                    <div class="typing-indicator">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                </div>
-            `;
-            chatContainer.appendChild(loadingDiv);
-            
-            // Auto scroll
-            setTimeout(() => {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 50);
-            
-            // Simulate tutor response after 1.5 seconds
-            setTimeout(() => {
-                const loadingElement = document.getElementById('tutor-loading');
-                if (loadingElement) {
-                    loadingElement.remove();
-                }
-                
-                const tutorDiv = document.createElement('div');
-                tutorDiv.className = 'chat-message message-tutor';
-                tutorDiv.innerHTML = `
-                    <div class="message-label">Tutor</div>
-                    <div class="message-content">Tutor đang xử lý câu hỏi của bạn...\n\n💡 CP3: Sẽ thêm AI thật để sinh phản hồi tự động.</div>
-                    <div class="message-citations">📚 Citations sẽ hiển thị ở đây</div>
-                `;
-                chatContainer.appendChild(tutorDiv);
-                
-                // Auto scroll to new response
-                setTimeout(() => {
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }, 50);
-            }, 1500);
-            
-            // Focus back to input
-            document.getElementById('question-input').focus();
-        }
-        
-        function toggleDay(day) {
-            // Simple day toggle (optional enhancement)
-            console.log('Toggle day', day);
-        }
-        
-        // Initialize with home screen
-        window.onload = function() {
-            goHome();
-            
-            // Add keyboard support for sending questions
-            const questionInput = document.getElementById('question-input');
-            if (questionInput) {
-                questionInput.addEventListener('keydown', function(e) {
-                    // Ctrl+Enter or Cmd+Enter to send
-                    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                        sendQuestion();
-                    }
-                });
-            }
-        };
+      /* ---- Khởi động ---- */
+      window.onload = function () {
+        dungDanhSachTaiLieu();
+        veTrangChu();
+        el("question-input").addEventListener("keydown", (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === "Enter") guiCauHoi();
+        });
+        document.addEventListener("keydown", (e) => {
+          if (el("main-layout").style.display === "none") return;
+          if (document.activeElement === el("question-input")) return;
+          if (e.key === "ArrowLeft") doiTrang(-1);
+          if (e.key === "ArrowRight") doiTrang(1);
+        });
+      };
     </script>
->>>>>>> origin
-</body>
+  </body>
 </html>

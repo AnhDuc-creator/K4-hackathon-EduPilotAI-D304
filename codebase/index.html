@@ -358,6 +358,9 @@
   }
   .sidebar-right.collapsed { width: 0; flex-basis: 0; border-left: none; overflow: visible; }
   .sidebar-right.collapsed .tutor-panel-inner { display: none; }
+  .tutor-panel-inner {
+    display: flex; flex-direction: column; height: 100%; min-height: 0;
+  }
 
   .tutor-fab {
     position: absolute; top: 18px; right: 14px; width: 40px; height: 40px; border-radius: 50%;
@@ -385,7 +388,7 @@
     background: none; padding: 4px 8px; border-radius: 5px;
   }
   .btn-clear:hover { background: var(--bg); color: var(--ink); }
-  .chat-history { flex: 1; overflow-y: auto; padding: 16px; }
+  .chat-history { flex: 1; min-height: 0; overflow-y: auto; padding: 16px; }
   .chat-empty { font-size: 13px; color: var(--muted); line-height: 1.7; text-align: center; padding: 30px 10px; }
   .msg { margin-bottom: 14px; }
   .msg-label { font-size: 11px; font-weight: 800; letter-spacing: .07em; color: var(--muted); margin-bottom: 5px; }
@@ -496,7 +499,7 @@
     </div>
   </div>
   <div class="hdr-right">
-    <span class="mock-badge">MOCK — CP2</span>
+    <span class="mock-badge"></span>
     <button class="lang-btn">VI</button>
     <button class="icon-btn" title="Chế độ tối">🌙</button>
   </div>
@@ -575,7 +578,7 @@
     <div class="upload-section">
       <div class="upload-title">Tài liệu của bạn</div>
       <div class="upload-sub">Tải PDF bài giảng lên để đọc và hỏi Tutor ngay trong VLearn.</div>
-      <button class="btn-upload" id="btn-upload" onclick="chonFilePdf()">⬆ Tải PDF bài học lên</button>
+      <button class="btn-upload" id="btn-upload" onclick="chonFilePdf()"></button>
       <div class="upload-progress" id="upload-progress" style="display:none"></div>
       <input type="file" id="pdf-input" accept="application/pdf" style="display:none" onchange="xuLyChonFile(event)">
     </div>

@@ -6,157 +6,313 @@
 <title>VLearn — AI &amp; LLM Foundation</title>
 <style>
   :root {
-    --green: #1a5f3c;
-    --green-dark: #144a2f;
-    --green-soft: #f0f8f5;
-    --green-line: #c9e0d5;
-    --ink: #1d2b24;
-    --muted: #6b7a72;
-    --line: #e2e6e4;
-    --bg: #f5f6f5;
+    --navy: #16305c;
+    --navy-dark: #0f2445;
+    --blue: #2b57c9;
+    --blue-soft: #eef3fc;
+    --blue-line: #d3e0f5;
+    --red: #e14b3f;
+    --ink: #1c2733;
+    --muted: #6b7684;
+    --muted-2: #97a1ac;
+    --line: #e6e9ee;
+    --bg: #f3f5f8;
+    --card: #ffffff;
+    --tutor-soft: #eef3fc;
+    --tutor-line: #d3e0f5;
     --amber: #8a5a2b;
     --amber-soft: #fdf6ec;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg); color: var(--ink);
     height: 100vh; overflow: hidden; font-size: 14px;
   }
-  button { font-family: inherit; cursor: pointer; border: none; }
-  :focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  a { text-decoration: none; color: inherit; }
 
-  /* ---------- Header ---------- */
+  /* ================= HEADER (home / course list) ================= */
   .header {
     background: #fff; border-bottom: 1px solid var(--line);
-    padding: 0 20px; display: flex; align-items: center; gap: 16px; height: 58px;
+    padding: 0 22px; display: flex; align-items: center; gap: 18px; height: 60px;
   }
-  .logo { font-size: 18px; font-weight: 700; color: var(--green); cursor: pointer; }
-  .course-title { font-size: 13px; color: var(--muted); font-weight: 600; }
-  .crumb { font-size: 13px; color: var(--muted); }
-  .crumb b { color: var(--ink); }
-  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .logo-wrap { display: flex; align-items: center; gap: 9px; cursor: pointer; }
+  .logo-mark {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+    display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  }
+  .logo-mark svg { width: 15px; height: 15px; }
+  .logo-text { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: -.01em; }
+  .logo-text.small { font-size: 15px; }
+
+  .hdr-nav { display: flex; align-items: center; gap: 4px; margin-left: 8px; height: 100%; }
+  .nav-link {
+    position: relative; height: 100%; display: flex; align-items: center; gap: 6px;
+    padding: 0 14px; font-size: 14px; font-weight: 600; color: var(--muted);
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link.active { color: var(--red); }
+  .nav-link.active::after {
+    content: ''; position: absolute; left: 10px; right: 10px; bottom: 0;
+    height: 2px; background: var(--red); border-radius: 2px 2px 0 0;
+  }
+  .nav-link.disabled { color: var(--muted-2); cursor: default; }
+  .soon-badge {
+    font-size: 10px; font-weight: 800; letter-spacing: .03em;
+    background: var(--blue-soft); color: var(--blue);
+    border-radius: 99px; padding: 2px 7px;
+  }
+
+  .hdr-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .btn-ghost {
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    background: #fff; border: 1px solid var(--line);
+    border-radius: 7px; padding: 7px 13px; display: flex; align-items: center; gap: 6px;
+  }
+  .btn-ghost:hover { background: var(--bg); }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 8px; display: flex;
+    align-items: center; justify-content: center; color: var(--muted); font-size: 15px;
+    border: 1px solid transparent;
+  }
+  .icon-btn:hover { background: var(--bg); color: var(--ink); }
+  .lang-btn {
+    font-size: 12px; font-weight: 800; color: var(--navy);
+    background: var(--blue-soft); border-radius: 7px; padding: 7px 11px;
+  }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--navy);
+    color: #fff; font-size: 13px; font-weight: 700; display: flex;
+    align-items: center; justify-content: center;
+  }
+
+  /* header (study / slide viewer) */
+  .header-study { display: none; }
+  .back-btn {
+    width: 32px; height: 32px; border-radius: 8px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .back-btn:hover { background: var(--bg); color: var(--ink); }
+  .study-doc {
+    display: flex; align-items: center; gap: 9px; padding-left: 6px;
+    border-left: 1px solid var(--line); margin-left: 4px;
+  }
+  .study-doc-icon {
+    width: 30px; height: 30px; border-radius: 7px; background: var(--blue-soft);
+    color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .study-doc-name { font-size: 14px; font-weight: 700; line-height: 1.3; }
+  .study-doc-sub { font-size: 11.5px; color: var(--muted); line-height: 1.3; }
   .mock-badge {
     font-size: 11px; font-weight: 700; letter-spacing: .04em;
     background: var(--amber-soft); color: var(--amber);
     border: 1px solid #e8d5b8; border-radius: 99px; padding: 4px 10px;
   }
-  .btn-ghost {
-    font-size: 13px; font-weight: 600; color: var(--green);
-    background: #fff; border: 1px solid var(--green-line);
-    border-radius: 6px; padding: 6px 12px;
-  }
-  .btn-ghost:hover { background: var(--green-soft); }
 
-  /* ---------- Trang chu ---------- */
-  #home-screen {
-    height: calc(100vh - 58px); overflow-y: auto;
-    background: linear-gradient(135deg, #f5f6f5 0%, #e8f4f0 100%);
-    padding: 48px 24px;
+  /* ================= TRANG CHU (dashboard) ================= */
+  #home-screen { height: calc(100vh - 60px); overflow-y: auto; padding: 32px 28px; }
+  .home-inner {
+    max-width: 1180px; margin: 0 auto; display: grid;
+    grid-template-columns: 1.5fr 1fr; gap: 20px;
   }
-  .home-inner { max-width: 720px; margin: 0 auto; }
-  .home-inner h1 { font-size: 40px; color: var(--green); font-weight: 700; letter-spacing: -.02em; }
-  .home-lead { font-size: 17px; color: var(--muted); margin: 12px 0 32px; line-height: 1.6; }
   .card {
-    background: #fff; border: 1px solid var(--line); border-radius: 10px;
-    padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,.05); margin-bottom: 20px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 22px; box-shadow: 0 1px 2px rgba(16,30,54,.04);
   }
-  .card h2 { font-size: 17px; color: var(--green); margin-bottom: 14px; }
-  .course-meta { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
-  .course-meta strong { color: var(--ink); font-size: 14px; }
-  .progress-wrap { margin-bottom: 20px; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-  .progress-bar { height: 7px; background: var(--line); border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--green); border-radius: 99px; transition: width .4s; }
-  .btn-primary {
-    background: var(--green); color: #fff; padding: 13px 32px;
-    border-radius: 7px; font-size: 15px; font-weight: 600; transition: background .15s;
-  }
-  .btn-primary:hover { background: var(--green-dark); }
-  .btn-primary:disabled { opacity: .5; cursor: default; }
-  .howto {
-    background: var(--green-soft); border-left: 4px solid var(--green);
-    padding: 18px 20px; border-radius: 6px; font-size: 13px; line-height: 1.7;
-  }
-  .howto strong { color: var(--green); }
-  .howto ol { margin: 8px 0 0 20px; }
+  .card + .card { margin-top: 18px; }
 
-  /* ---------- Layout 3 cot ---------- */
-  .main-layout { display: flex; height: calc(100vh - 58px); }
+  .hero-card { position: relative; overflow: hidden; background: #fff; }
+  .hero-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+  .hero-title { font-size: 22px; font-weight: 800; color: var(--ink); margin: 8px 0 16px; }
+  .hero-progress-label { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+  .progress-bar { height: 7px; background: var(--line); border-radius: 99px; overflow: hidden; max-width: 420px; }
+  .progress-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width .4s; }
+  .btn-primary {
+    background: var(--navy); color: #fff; padding: 11px 22px; margin-top: 18px;
+    border-radius: 8px; font-size: 14px; font-weight: 700; display: inline-flex;
+    align-items: center; gap: 8px; transition: background .15s;
+  }
+  .btn-primary:hover { background: var(--navy-dark); }
+
+  .welcome-title { font-size: 11px; font-weight: 800; letter-spacing: .06em; color: var(--red); text-transform: uppercase; }
+  .welcome-name { font-size: 18px; font-weight: 800; margin: 8px 0 4px; }
+  .welcome-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 18px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-box { background: var(--bg); border-radius: 9px; padding: 12px 14px; }
+  .stat-label { font-size: 11px; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+  .stat-value { font-size: 20px; font-weight: 800; color: var(--ink); }
+
+  .section-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+  .section-sub { font-size: 12.5px; color: var(--muted); margin-bottom: 16px; }
+  .day-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 13.5px;
+  }
+  .day-row:last-child { border-bottom: none; }
+  .day-row .dpct { color: var(--muted); font-weight: 600; }
+
+  .stat-list-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 13.5px;
+  }
+  .stat-list-row:last-child { border-bottom: none; }
+  .stat-list-row .lbl { display: flex; align-items: center; gap: 9px; color: var(--ink); font-weight: 600; }
+  .stat-list-row .val { font-weight: 800; color: var(--navy); }
+
+  .cta-row {
+    display: flex; align-items: center; gap: 14px; background: var(--blue-soft);
+    border-radius: 10px; padding: 14px 16px; cursor: pointer;
+  }
+  .cta-row:hover { background: #e4ecfb; }
+  .cta-icon { font-size: 18px; }
+  .cta-title { font-size: 13.5px; font-weight: 700; }
+  .cta-sub { font-size: 12px; color: var(--muted); }
+  .cta-arrow { margin-left: auto; color: var(--muted); font-size: 15px; }
+
+  /* ================= LAYOUT 3 COT (slide viewer) ================= */
+  .main-layout { display: flex; height: calc(100vh - 60px); }
 
   /* Sidebar trai */
   .sidebar-left {
-    width: 260px; flex: 0 0 260px; background: #fff;
-    border-right: 1px solid var(--line); overflow-y: auto; padding: 16px 0;
+    width: 268px; flex: 0 0 268px; background: #fff;
+    border-right: 1px solid var(--line); overflow-y: auto; display: flex; flex-direction: column;
   }
-  .sidebar-title {
-    font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--muted);
-    padding: 0 16px 12px; text-transform: uppercase;
+  .sidebar-left-head {
+    display: flex; gap: 10px; align-items: flex-start; padding: 16px 16px 14px;
+    border-bottom: 1px solid var(--line);
   }
-  .day-group { margin-bottom: 4px; }
+  .sidebar-left-icon {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--blue-soft);
+    color: var(--blue); display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex: 0 0 auto;
+  }
+  .sidebar-left-title { font-size: 13.5px; font-weight: 800; }
+  .sidebar-left-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  .day-group { border-bottom: 1px solid var(--line); }
   .day-header {
-    display: flex; align-items: center; gap: 8px;
-    padding: 9px 16px; font-size: 13px; font-weight: 700; color: var(--ink);
-    cursor: pointer; user-select: none;
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; cursor: pointer; user-select: none;
   }
   .day-header:hover { background: var(--bg); }
-  .caret { font-size: 10px; color: var(--muted); transition: transform .15s; }
+  .day-pill {
+    width: 30px; height: 30px; border-radius: 8px; background: var(--bg);
+    border: 1px solid var(--line); display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: var(--muted); flex: 0 0 auto; line-height: 1.1;
+  }
+  .day-name { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+  .day-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+  .caret { margin-left: auto; font-size: 10px; color: var(--muted); transition: transform .15s; }
   .day-group.closed .caret { transform: rotate(-90deg); }
   .day-group.closed .material-item { display: none; }
+
   .material-item {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    padding: 8px 16px 8px 34px; font-size: 13px; color: var(--muted);
-    cursor: pointer; border-left: 3px solid transparent;
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 16px 9px 20px; margin: 0 8px 4px 44px; font-size: 12.5px; color: var(--muted);
+    cursor: pointer; border-radius: 7px;
   }
   .material-item:hover { background: var(--bg); color: var(--ink); }
-  .material-item.active {
-    background: var(--green-soft); color: var(--green);
-    font-weight: 600; border-left-color: var(--green);
+  .material-item.active { background: var(--blue-soft); color: var(--navy); font-weight: 700; }
+  .mat-dot {
+    width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--muted-2);
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #fff;
   }
-  .pages-tag { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .material-item.active .mat-dot { background: var(--blue); border-color: var(--blue); }
+  .material-item.visited:not(.active) .mat-dot { background: var(--muted-2); border-color: var(--muted-2); }
+  .mat-name { flex: 1; }
+  .mat-pages { font-size: 10.5px; color: var(--muted-2); font-weight: 600; }
 
-  /* Giua: slide */
-  .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 20px; }
+  /* Giua: toolbar + slide */
+  .content-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 16px; gap: 12px; }
+
+  .toolbar {
+    background: #fff; border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .seg { display: flex; background: var(--bg); border-radius: 8px; padding: 3px; gap: 2px; }
+  .seg-btn {
+    font-size: 12.5px; font-weight: 700; color: var(--muted); padding: 6px 12px;
+    border-radius: 6px; display: flex; align-items: center; gap: 5px;
+  }
+  .seg-btn.active { background: #fff; color: var(--navy); box-shadow: 0 1px 2px rgba(16,30,54,.08); }
+  .toolbar-sep { width: 1px; height: 22px; background: var(--line); }
+  .toolbar-note { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .zoom-group { display: flex; align-items: center; gap: 2px; margin-left: auto; }
+  .zoom-btn {
+    width: 26px; height: 26px; border-radius: 6px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+  }
+  .zoom-btn:hover { background: var(--bg); color: var(--ink); }
+  .zoom-val { font-size: 12px; font-weight: 700; color: var(--ink); width: 42px; text-align: center; }
+  .toolbar-icons { display: flex; gap: 2px; }
+  .toolbar-icons .icon-btn { width: 28px; height: 28px; font-size: 13px; }
+
   .slide-display {
     flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 10px;
     display: flex; flex-direction: column; overflow: hidden;
   }
-  .slide-head { padding: 20px 26px 14px; border-bottom: 1px solid var(--line); }
-  .slide-title { font-size: 20px; font-weight: 700; }
-  .slide-subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
-  .slide-body { flex: 1; overflow-y: auto; padding: 26px; }
+  .slide-head { padding: 18px 26px 12px; border-bottom: 1px solid var(--line); }
+  .slide-title { font-size: 18px; font-weight: 700; }
+  .slide-subtitle { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .slide-body { flex: 1; overflow-y: auto; padding: 26px; transform-origin: top left; }
   .page-no {
     display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .08em;
-    color: var(--green); background: var(--green-soft);
-    border: 1px solid var(--green-line); border-radius: 99px;
+    color: var(--navy); background: var(--blue-soft);
+    border: 1px solid var(--blue-line); border-radius: 99px;
     padding: 3px 10px; margin-bottom: 14px;
   }
   .page-heading { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
   .page-text { font-size: 15px; line-height: 1.75; white-space: pre-wrap; }
-  .page-text::selection { background: #cfe8dd; }
+  .page-text::selection { background: #cfe0fb; }
   .slide-foot {
-    border-top: 1px solid var(--line); padding: 12px 26px;
+    border-top: 1px solid var(--line); padding: 10px 26px;
     display: flex; align-items: center; gap: 12px;
   }
   .btn-page {
-    font-size: 13px; font-weight: 600; color: var(--green);
-    background: #fff; border: 1px solid var(--green-line);
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    background: #fff; border: 1px solid var(--blue-line);
     border-radius: 6px; padding: 7px 14px;
   }
-  .btn-page:hover:not(:disabled) { background: var(--green-soft); }
+  .btn-page:hover:not(:disabled) { background: var(--blue-soft); }
   .btn-page:disabled { color: var(--muted); border-color: var(--line); cursor: default; }
   .page-count { font-size: 13px; color: var(--muted); font-weight: 600; }
   .foot-hint { margin-left: auto; font-size: 12px; color: var(--muted); }
 
-  /* Sidebar phai: tutor */
+  /* Sidebar phai: tutor (collapsible) */
   .sidebar-right {
     width: 380px; flex: 0 0 380px; background: #fff;
     border-left: 1px solid var(--line); display: flex; flex-direction: column;
+    transition: width .18s ease, flex-basis .18s ease;
   }
+  .sidebar-right.collapsed { width: 56px; flex-basis: 56px; }
+  .sidebar-right.collapsed .tutor-header-text,
+  .sidebar-right.collapsed .btn-clear,
+  .sidebar-right.collapsed .chat-history,
+  .sidebar-right.collapsed .tutor-input-area { display: none; }
+  .sidebar-right.collapsed .tutor-header { flex-direction: column; padding: 16px 8px; gap: 14px; }
+  .sidebar-right.collapsed .collapsed-label {
+    display: flex; writing-mode: vertical-rl; text-orientation: mixed;
+    font-size: 12px; font-weight: 800; color: var(--navy); letter-spacing: .03em;
+  }
+  .collapsed-label { display: none; }
+
   .tutor-header { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: center; }
-  .tutor-title { font-size: 15px; font-weight: 700; }
-  .tutor-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .tutor-toggle {
+    width: 30px; height: 30px; border-radius: 8px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; flex: 0 0 auto;
+  }
+  .tutor-toggle:hover { background: var(--bg); color: var(--ink); }
+  .tutor-title-wrap { display: flex; align-items: center; gap: 9px; }
+  .tutor-icon {
+    width: 28px; height: 28px; border-radius: 8px; background: var(--blue-soft);
+    color: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 13px; flex: 0 0 auto;
+  }
+  .tutor-title { font-size: 14.5px; font-weight: 700; }
+  .tutor-subtitle { font-size: 11.5px; color: var(--muted); margin-top: 1px; }
   .btn-clear {
     margin-left: auto; font-size: 12px; font-weight: 600; color: var(--muted);
     background: none; padding: 4px 8px; border-radius: 5px;
@@ -171,21 +327,21 @@
     border-radius: 8px; padding: 11px 13px;
   }
   .msg-student .msg-content { background: var(--bg); border: 1px solid var(--line); }
-  .msg-tutor .msg-content { background: var(--green-soft); border: 1px solid var(--green-line); }
+  .msg-tutor .msg-content { background: var(--tutor-soft); border: 1px solid var(--tutor-line); }
   .msg-quote {
     font-size: 12px; color: var(--muted); font-style: italic;
-    border-left: 3px solid var(--green-line); padding-left: 8px; margin-bottom: 7px;
+    border-left: 3px solid var(--tutor-line); padding-left: 8px; margin-bottom: 7px;
   }
   .move-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
   .tag {
     font-size: 11px; font-weight: 800; letter-spacing: .05em;
     border-radius: 99px; padding: 3px 9px;
-    background: #e3f0ea; color: var(--green); border: 1px solid var(--green-line);
+    background: var(--blue-soft); color: var(--navy); border: 1px solid var(--blue-line);
   }
   .tag.warn { background: var(--amber-soft); color: var(--amber); border-color: #e8d5b8; }
   .tag.page { background: #fff; color: var(--muted); border-color: var(--line); font-weight: 700; }
   .typing { display: flex; gap: 4px; padding: 4px 0; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); opacity: .4; animation: blink 1.2s infinite; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); opacity: .4; animation: blink 1.2s infinite; }
   .dot:nth-child(2) { animation-delay: .2s; }
   .dot:nth-child(3) { animation-delay: .4s; }
   @keyframes blink { 0%,60%,100% { opacity: .25 } 30% { opacity: 1 } }
@@ -199,8 +355,8 @@
     display: flex; gap: 8px; align-items: flex-start;
   }
   .highlight-box.active {
-    background: var(--green-soft); border-style: solid;
-    border-color: var(--green-line); color: var(--ink);
+    background: var(--blue-soft); border-style: solid;
+    border-color: var(--blue-line); color: var(--ink);
   }
   .highlight-text { flex: 1; }
   .btn-x { background: none; color: var(--muted); font-size: 15px; line-height: 1; padding: 0 2px; }
@@ -212,64 +368,119 @@
   }
   .btn-row { display: flex; gap: 8px; margin-top: 10px; }
   .btn-send {
-    flex: 1; background: var(--green); color: #fff;
-    border-radius: 7px; padding: 11px; font-size: 14px; font-weight: 600;
+    flex: 1; background: var(--navy); color: #fff;
+    border-radius: 7px; padding: 11px; font-size: 14px; font-weight: 700;
   }
-  .btn-send:hover:not(:disabled) { background: var(--green-dark); }
+  .btn-send:hover:not(:disabled) { background: var(--navy-dark); }
   .btn-send:disabled { opacity: .5; cursor: default; }
   .input-hint { font-size: 11px; color: var(--muted); margin-top: 8px; text-align: center; }
 
   @media (max-width: 1100px) {
     .sidebar-left { display: none; }
-    .sidebar-right { width: 330px; flex-basis: 330px; }
+    .sidebar-right:not(.collapsed) { width: 330px; flex-basis: 330px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ================= HEADER ================= -->
-<div class="header">
-  <div class="logo" onclick="veTrangChu()" title="Về trang chủ">VLearn</div>
-  <div class="course-title" id="header-title" style="display:none">COMP2010 · Khóa 3 + 4 Phase 1</div>
-  <div class="crumb" id="header-crumb" style="display:none"></div>
-  <div class="header-right">
-    <button class="btn-ghost" id="btn-home" style="display:none" onclick="veTrangChu()">Trang chủ</button>
+<!-- ================= HEADER: home / danh sach khoa hoc ================= -->
+<div class="header" id="header-home">
+  <div class="logo-wrap" onclick="veTrangChu()" title="Về trang chủ">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="logo-text">VLearn</div>
+  </div>
+  <nav class="hdr-nav">
+    <a class="nav-link active" id="tab-home" onclick="veTrangChu()">🏠 Trang chủ</a>
+    <a class="nav-link" id="tab-course" onclick="moDanhSachKhoaHoc()">📖 Khóa học</a>
+    <a class="nav-link disabled">🎯 Luyện tập <span class="soon-badge">SẮP RA MẮT</span></a>
+    <a class="nav-link" id="tab-notebook" style="display:none">🗒 Sổ tay học tập</a>
+  </nav>
+  <div class="hdr-right">
+    <span class="mock-badge" id="mock-badge-home" style="display:none">MOCK — CP2</span>
+    <button class="btn-ghost">↗ Mở Codelabs</button>
+    <button class="lang-btn">VI</button>
+    <button class="icon-btn" title="Chế độ tối">🌙</button>
+    <button class="icon-btn" title="Thông báo">🔔</button>
+    <div class="avatar">2</div>
   </div>
 </div>
 
-<!-- ================= TRANG CHỦ ================= -->
+<!-- ================= HEADER: xem tai lieu / slide ================= -->
+<div class="header header-study" id="header-study">
+  <button class="back-btn" onclick="veTrangChu()" title="Quay lại">←</button>
+  <div class="logo-wrap" onclick="veTrangChu()" title="Về trang chủ">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="logo-text small">VLearn</div>
+  </div>
+  <div class="study-doc">
+    <div class="study-doc-icon">📘</div>
+    <div>
+      <div class="study-doc-name" id="study-doc-name">—</div>
+      <div class="study-doc-sub" id="study-doc-sub">COMP2010</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <span class="mock-badge">MOCK — CP2</span>
+    <button class="lang-btn">VI</button>
+    <button class="icon-btn" title="Chế độ tối">🌙</button>
+  </div>
+</div>
+
+<!-- ================= TRANG CHỦ (dashboard) ================= -->
 <div id="home-screen">
   <div class="home-inner">
-    <h1>Chào mừng đến VLearn</h1>
-    <p class="home-lead">
-      Nền tảng học tập có AI Tutor đi kèm từng trang tài liệu. Bôi đen chỗ đang bí,
-      hỏi ngay tại chỗ, và nhận câu trả lời có dẫn số trang.
-    </p>
-
-    <div class="card">
-      <h2>Khóa học của bạn</h2>
-      <div class="course-meta">
-        <strong>COMP2010 · Khóa 3 + 4 Phase 1</strong><br>
-        AI &amp; LLM thực chiến · 6 ngày · 7 tài liệu
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-label">
-          <span>Tiến độ của bạn</span>
-          <span id="progress-text">0 / 7 tài liệu</span>
-        </div>
+    <div>
+      <div class="card hero-card">
+        <div class="hero-eyebrow">Tiếp tục học</div>
+        <div class="hero-title">Khoá 3 + 4 Phase 1</div>
+        <div class="hero-progress-label" id="hero-progress-label">0% đã đọc · 0/7 ngày</div>
         <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        <button class="btn-primary" onclick="batDauHoc()">Vào học →</button>
       </div>
-      <button class="btn-primary" onclick="batDauHoc()">Bắt đầu học</button>
+
+      <div class="card">
+        <div class="section-title">Tiến độ theo buổi</div>
+        <div class="section-sub">Các buổi bạn đã đọc được nhiều nhất.</div>
+        <div id="day-progress-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="cta-row" onclick="moDanhSachKhoaHoc()">
+          <div class="cta-icon">📖</div>
+          <div>
+            <div class="cta-title">Xem khóa học</div>
+            <div class="cta-sub">Mở danh sách đầy đủ các lớp bạn đang theo học.</div>
+          </div>
+          <div class="cta-arrow">→</div>
+        </div>
+      </div>
     </div>
 
-    <div class="howto">
-      <strong>Cách sử dụng</strong>
-      <ol>
-        <li>Chọn tài liệu ở cột bên trái</li>
-        <li>Bôi đen đoạn văn bạn muốn hỏi, đoạn đó sẽ tự vào ô ngữ cảnh</li>
-        <li>Nhập câu hỏi rồi bấm Gửi cho Tutor</li>
-        <li>Xem Tutor chọn cách trả lời nào và dẫn trang bao nhiêu</li>
-      </ol>
+    <div>
+      <div class="card">
+        <div class="welcome-title">VLearn · VinUni AI Thực Chiến</div>
+        <div class="welcome-name">Chào mừng trở lại!</div>
+        <div class="welcome-sub" id="welcome-sub">Đã đọc 0/7 ngày học</div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-label">📘 KHÓA HỌC</div><div class="stat-value">1</div></div>
+          <div class="stat-box"><div class="stat-label">🎯 NGÀY ĐÃ HỌC</div><div class="stat-value" id="stat-days">0</div></div>
+          <div class="stat-box"><div class="stat-label">💬 CÂU HỎI VỚI TUTOR</div><div class="stat-value" id="stat-questions">0</div></div>
+          <div class="stat-box"><div class="stat-label">📝 GHI CHÚ</div><div class="stat-value">0</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Hoạt động học tập</div>
+        <div class="section-sub">Tổng hợp trên toàn bộ khóa học bạn đang theo.</div>
+        <div class="stat-list-row"><span class="lbl">📝 Ghi chú</span><span class="val">0</span></div>
+        <div class="stat-list-row"><span class="lbl">✏️ Đoạn đánh dấu</span><span class="val">0</span></div>
+        <div class="stat-list-row"><span class="lbl">💬 Câu hỏi Tutor</span><span class="val" id="stat-questions-2">0</span></div>
+        <div class="stat-list-row"><span class="lbl">⚠️ Trang cần ôn</span><span class="val">0</span></div>
+      </div>
     </div>
   </div>
 </div>
@@ -279,12 +490,38 @@
 
   <!-- Cột trái: tài liệu -->
   <div class="sidebar-left">
-    <div class="sidebar-title">Tài liệu học tập</div>
+    <div class="sidebar-left-head">
+      <div class="sidebar-left-icon">📖</div>
+      <div>
+        <div class="sidebar-left-title">Học liệu môn học</div>
+        <div class="sidebar-left-sub">Chương, slide và tài liệu đã upload</div>
+      </div>
+    </div>
     <div id="material-list"></div>
   </div>
 
-  <!-- Cột giữa: slide -->
+  <!-- Cột giữa: toolbar + slide -->
   <div class="content-area">
+    <div class="toolbar">
+      <div class="seg">
+        <button class="seg-btn active">👁 Đọc</button>
+        <button class="seg-btn">✏️ Bút</button>
+        <button class="seg-btn">🖍 Highlight</button>
+      </div>
+      <div class="toolbar-sep"></div>
+      <div class="toolbar-note" id="toolbar-note">Trang 1 · 0 note</div>
+      <div class="zoom-group">
+        <button class="zoom-btn" onclick="doiZoom(-10)">−</button>
+        <span class="zoom-val" id="zoom-val">100%</span>
+        <button class="zoom-btn" onclick="doiZoom(10)">+</button>
+      </div>
+      <div class="toolbar-icons">
+        <button class="icon-btn" title="Tải xuống">⬇</button>
+        <button class="icon-btn" title="Nhân bản">⧉</button>
+        <button class="icon-btn" title="Hoàn tác">↺</button>
+      </div>
+    </div>
+
     <div class="slide-display">
       <div class="slide-head">
         <div class="slide-title" id="slide-title"></div>
@@ -300,14 +537,19 @@
     </div>
   </div>
 
-  <!-- Cột phải: tutor -->
-  <div class="sidebar-right">
+  <!-- Cột phải: tutor (thu nhỏ / phóng to được) -->
+  <div class="sidebar-right" id="sidebar-right">
     <div class="tutor-header">
-      <div>
-        <div class="tutor-title">VLearn Tutor</div>
-        <div class="tutor-subtitle">Hỏi và học theo từng trang</div>
+      <button class="tutor-toggle" id="tutor-toggle" onclick="toggleTutorPanel()" title="Thu nhỏ / phóng to Tutor">‹</button>
+      <div class="tutor-title-wrap tutor-header-text">
+        <div class="tutor-icon">✨</div>
+        <div>
+          <div class="tutor-title">VLearn Tutor</div>
+          <div class="tutor-subtitle">Hỏi và học theo từng trang</div>
+        </div>
       </div>
       <button class="btn-clear" onclick="xoaHoiThoai()">Xóa hội thoại</button>
+      <span class="collapsed-label">AI TUTOR</span>
     </div>
 
     <div class="chat-history" id="chat-history"></div>
@@ -453,7 +695,7 @@ function cauDauTien(text) {
 function mockTraLoi(cauHoi, doanNguCanh, danhSachTrang) {
   const trang = timTrang(cauHoi, doanNguCanh, danhSachTrang);
 
-  // Luật ở dòng 6 của Canvas: không có căn cứ thì không đoán.
+  // Luật: không có căn cứ thì không đoán.
   if (!trang) {
     return {
       nuocDi: 'chua_co_can_cu',
@@ -493,28 +735,38 @@ let taiLieuHienTai = null;
 let chiSoTrang = 0;
 let doanDaChon = null;
 let daMo = new Set();
+let soCauHoi = 0;
+let mucZoom = 100;
+let tutorThuNho = false;
 const hoiThoai = {}; // theo id tài liệu
 
 const el = id => document.getElementById(id);
 const doiMotChut = ms => new Promise(r => setTimeout(r, ms));
 
 /* ---- Điều hướng ---- */
+function dungHeaderHome() {
+  el('header-home').style.display = 'flex';
+  el('header-study').style.display = 'none';
+}
+function dungHeaderStudy() {
+  el('header-home').style.display = 'none';
+  el('header-study').style.display = 'flex';
+}
+
 function veTrangChu() {
   el('home-screen').style.display = 'block';
   el('main-layout').style.display = 'none';
-  el('header-title').style.display = 'none';
-  el('header-crumb').style.display = 'none';
-  el('mock-badge').style.display = 'none';
-  el('btn-home').style.display = 'none';
+  dungHeaderHome();
   capNhatTienDo();
+}
+function moDanhSachKhoaHoc() {
+  // Trong mock này chỉ có một khóa học, nên "Khóa học" dẫn thẳng vào học liệu.
+  batDauHoc();
 }
 function batDauHoc() {
   el('home-screen').style.display = 'none';
   el('main-layout').style.display = 'flex';
-  el('header-title').style.display = 'block';
-  el('header-crumb').style.display = 'block';
-  el('mock-badge').style.display = 'inline-block';
-  el('btn-home').style.display = 'inline-block';
+  dungHeaderStudy();
   if (!taiLieuHienTai) chonTaiLieu(TAI_LIEU[0].items[0].id);
   el('question-input').focus();
 }
@@ -529,8 +781,13 @@ function dungDanhSachTaiLieu() {
 
     const hd = document.createElement('div');
     hd.className = 'day-header';
-    hd.innerHTML = '<span class="caret">▼</span><span></span>';
-    hd.lastChild.textContent = nhom.day;
+    const soNgay = String(i + 1).padStart(2, '0');
+    hd.innerHTML =
+      '<div class="day-pill">DAY<br>' + soNgay + '</div>' +
+      '<div><div class="day-name"></div><div class="day-meta"></div></div>' +
+      '<span class="caret">▼</span>';
+    hd.querySelector('.day-name').textContent = nhom.day;
+    hd.querySelector('.day-meta').textContent = nhom.items.length + ' tài liệu';
     hd.onclick = () => g.classList.toggle('closed');
     g.appendChild(hd);
 
@@ -538,12 +795,12 @@ function dungDanhSachTaiLieu() {
       const d = document.createElement('div');
       d.className = 'material-item';
       d.dataset.id = item.id;
-      const ten = document.createElement('span');
-      ten.textContent = item.ten;
-      const sotr = document.createElement('span');
-      sotr.className = 'pages-tag';
-      sotr.textContent = item.trang.length + ' trang';
-      d.append(ten, sotr);
+      d.innerHTML =
+        '<span class="mat-dot"></span>' +
+        '<span class="mat-name"></span>' +
+        '<span class="mat-pages"></span>';
+      d.querySelector('.mat-name').textContent = item.ten;
+      d.querySelector('.mat-pages').textContent = item.trang.length + ' trang';
       d.onclick = () => chonTaiLieu(item.id);
       g.appendChild(d);
     });
@@ -562,23 +819,30 @@ function timTaiLieu(id) {
 function chonTaiLieu(id) {
   taiLieuHienTai = timTaiLieu(id);
   chiSoTrang = 0;
+  mucZoom = 100;
   daMo.add(id);
   doanDaChon = null;
 
-  document.querySelectorAll('.material-item').forEach(x =>
-    x.classList.toggle('active', x.dataset.id === id));
+  document.querySelectorAll('.material-item').forEach(x => {
+    const dangChon = x.dataset.id === id;
+    x.classList.toggle('active', dangChon);
+    if (dangChon || daMo.has(x.dataset.id)) x.classList.toggle('visited', daMo.has(x.dataset.id));
+  });
   // mở nhóm chứa tài liệu này
   document.querySelectorAll('.material-item.active').forEach(x =>
     x.closest('.day-group').classList.remove('closed'));
 
   el('slide-title').textContent = taiLieuHienTai.ten;
   el('slide-subtitle').textContent = taiLieuHienTai.phu;
+  el('study-doc-name').textContent = taiLieuHienTai.ten;
+  el('zoom-val').textContent = mucZoom + '%';
+  el('slide-body').style.transform = 'scale(1)';
   veTrang();
   veHoiThoai();
   veDoanDaChon();
 }
 
-/* ---- Cột giữa ---- */
+/* ---- Cột giữa: toolbar + slide ---- */
 function veTrang() {
   const t = taiLieuHienTai.trang[chiSoTrang];
   const body = el('slide-body');
@@ -600,13 +864,10 @@ function veTrang() {
   body.scrollTop = 0;
 
   el('page-count').textContent = 'Trang ' + (chiSoTrang + 1) + ' / ' + taiLieuHienTai.trang.length;
+  el('toolbar-note').textContent = 'Trang ' + (chiSoTrang + 1) + ' · 0 note';
   el('btn-prev').disabled = chiSoTrang === 0;
   el('btn-next').disabled = chiSoTrang === taiLieuHienTai.trang.length - 1;
-  el('header-crumb').innerHTML = '';
-  el('header-crumb').append(document.createTextNode(taiLieuHienTai.ten + ' · '));
-  const b = document.createElement('b');
-  b.textContent = 'Trang ' + t.so;
-  el('header-crumb').appendChild(b);
+  el('study-doc-sub').textContent = 'COMP2010 · Trang ' + t.so;
 }
 
 function doiTrang(buoc) {
@@ -614,6 +875,12 @@ function doiTrang(buoc) {
   if (moi < 0 || moi >= taiLieuHienTai.trang.length) return;
   chiSoTrang = moi;
   veTrang();
+}
+
+function doiZoom(buoc) {
+  mucZoom = Math.min(160, Math.max(60, mucZoom + buoc));
+  el('zoom-val').textContent = mucZoom + '%';
+  el('slide-body').style.transform = 'scale(' + (mucZoom / 100) + ')';
 }
 
 /* ---- Bôi đen để chọn đoạn ---- */
@@ -628,6 +895,7 @@ document.addEventListener('mouseup', () => {
   if (text.length < 3) return;
   doanDaChon = { text, so: taiLieuHienTai.trang[chiSoTrang].so };
   veDoanDaChon();
+  if (tutorThuNho) toggleTutorPanel();
   el('question-input').focus();
 });
 
@@ -646,6 +914,16 @@ function veDoanDaChon() {
   }
 }
 function boChonDoan() { doanDaChon = null; veDoanDaChon(); }
+
+/* ---- Cột phải: thu nhỏ / phóng to panel Tutor ---- */
+function toggleTutorPanel() {
+  tutorThuNho = !tutorThuNho;
+  const panel = el('sidebar-right');
+  const btn = el('tutor-toggle');
+  panel.classList.toggle('collapsed', tutorThuNho);
+  btn.textContent = tutorThuNho ? '›' : '‹';
+  btn.title = tutorThuNho ? 'Phóng to Tutor' : 'Thu nhỏ Tutor';
+}
 
 /* ---- Cột phải: hội thoại ---- */
 function veHoiThoai() {
@@ -706,6 +984,8 @@ async function guiCauHoi() {
   const cauHoi = input.value.trim();
   if (!cauHoi) { input.focus(); return; }
 
+  if (tutorThuNho) toggleTutorPanel();
+
   const id = taiLieuHienTai.id;
   if (!hoiThoai[id]) hoiThoai[id] = [];
 
@@ -714,6 +994,8 @@ async function guiCauHoi() {
   input.value = '';
   boChonDoan();
   veHoiThoai();
+  soCauHoi++;
+  capNhatChiSoTrangChu();
 
   // trạng thái đang gõ
   el('btn-send').disabled = true;
@@ -724,11 +1006,12 @@ async function guiCauHoi() {
   box.appendChild(wait);
   box.scrollTop = box.scrollHeight;
 
+  await doiMotChut(500);
   let kq;
   try {
-    kq = await traLoi(cauHoi, quoteDaDung ? quoteDaDung.text : '', taiLieuHienTai.trang);
+    kq = mockTraLoi(cauHoi, quoteDaDung ? quoteDaDung.text : '', taiLieuHienTai.trang);
   } catch (e) {
-    kq = { nuocDi: 'chua_co_can_cu', cauTraLoi: 'Không gọi được phần trả lời: ' + e.message + '. Bạn thử gửi lại.', soTrang: null };
+    kq = { nuocDi: 'chua_co_can_cu', cauTraLoi: 'Không tạo được câu trả lời: ' + e.message + '. Bạn thử gửi lại.', soTrang: null };
   }
 
   wait.remove();
@@ -744,13 +1027,31 @@ function xoaHoiThoai() {
   veHoiThoai();
 }
 
-/* ---- Tiến độ ---- */
+/* ---- Tiến độ / thống kê ở trang chủ ---- */
 function capNhatTienDo() {
   const tong = TAI_LIEU.reduce((n, g) => n + g.items.length, 0);
   const xong = daMo.size;
-  el('progress-text').textContent = xong + ' / ' + tong + ' tài liệu';
-  el('progress-fill').style.width = (tong ? Math.round(xong / tong * 100) : 0) + '%';
+  const pct = tong ? Math.round(xong / tong * 100) : 0;
+  el('progress-fill').style.width = pct + '%';
+  el('hero-progress-label').textContent = pct + '% đã đọc · ' + xong + '/' + tong + ' tài liệu';
+  el('welcome-sub').textContent = 'Đã đọc ' + xong + '/' + tong + ' tài liệu';
+  el('stat-questions').textContent = soCauHoi;
+  el('stat-questions-2').textContent = soCauHoi;
+
+  const list = el('day-progress-list');
+  list.innerHTML = '';
+  TAI_LIEU.forEach(nhom => {
+    const xongTrongNgay = nhom.items.filter(it => daMo.has(it.id)).length;
+    const p = xongTrongNgay ? Math.round(xongTrongNgay / nhom.items.length * 100) : 0;
+    const row = document.createElement('div');
+    row.className = 'day-row';
+    row.innerHTML = '<span></span><span class="dpct"></span>';
+    row.firstChild.textContent = nhom.day;
+    row.lastChild.textContent = p + '% đã đọc';
+    list.appendChild(row);
+  });
 }
+function capNhatChiSoTrangChu() { capNhatTienDo(); }
 
 /* ---- Khởi động ---- */
 window.onload = function () {
@@ -767,6 +1068,5 @@ window.onload = function () {
   });
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>

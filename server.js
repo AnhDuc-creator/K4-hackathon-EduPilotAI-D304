@@ -61,6 +61,13 @@ async function createResponse(input) {
   if (!response.ok) throw new Error(`OpenAI API ${response.status}: ${(await response.text()).slice(0, 300)}`);
   return response.json();
 }
+function getOutputText(response) {
+  if (typeof response.output_text === 'string') return response.output_text;
+  return response.output
+    ?.flatMap((item) => item.type === 'message' ? item.content || [] : [])
+    .find((content) => content.type === 'output_text' && typeof content.text === 'string')
+    ?.text || '';
+}
 async function answerQuestion(body) {
   const question = String(body.cauHoi || '').trim().slice(0, 2000);
   const selectedText = String(body.doanNguCanh || '').trim().slice(0, 4000);
@@ -73,7 +80,7 @@ async function answerQuestion(body) {
     const calls = (response.output || []).filter((item) => item.type === 'function_call');
     if (!calls.length) {
       try {
-        return { ...JSON.parse(response.output_text), toolTrace };
+        return { ...JSON.parse(getOutputText(response)), toolTrace };
       } catch {
         throw new Error('AI tra ve dinh dang khong hop le.');
       }
